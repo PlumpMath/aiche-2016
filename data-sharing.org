@@ -1,0 +1,416 @@
+#+TITLE: Authoring tools to automate data sharing in scientific publishing
+#+options: tags:nil toc:nil
+#+latex_header: \usepackage{attachfile}
+\maketitle
+\tableofcontents
+* Title slide							      :slide:
+#+BEGIN_SRC emacs-lisp-slide :exports none
+(org-show-animate '("Authoring tools to automate data sharing in scientific publishing" "March, 14, 2016" "John Kitchin" "Carnegie Mellon University"))
+#+END_SRC
+
+* Introduction
+- Data sharing is not easy
+- But it is increasingly required
+- And increasingly desired
+
+The big question is: "How do we make that happen?"
+
+- Nobody wants more work
+- We would all like to get more out of what we already do
+- We are working on tools that make that happen
+
+* Why is data sharing hard today?				      :slide:
+- For many scientific authors data and analysis are not integrated into writing tools
+
+  - Think about a manuscript in MS Word/LaTeX
+  - Data in Excel, data files,...
+  - Plots in Origin/SigmaPlot/etc.
+  - Separate script files for analysis
+  - all with limited interconnectivity
+
+     - e.g. where is the data in Fig 2 of the manuscript?
+     - Where is the script that did the data analysis?
+     - How do I reuse the data in Table 2 for a new purpose? Copy and Paste?
+
+- These tools are not especially well-integrated and not easily adapted to new use cases
+
+- You can hyperlink/embed data in some of these tools,
+  but this isn't supported by most publishers
+
+- Sharing then becomes extra work to generate supporting information that reconstructs the effort
+
+- Reconstruction of the work that went into the manuscript is error prone
+
+- and tedious...
+
+- Yet increasingly required, and desired
+* Our approach to this issue is integration			      :slide:
+
+- We propose that an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
+
+- It would leverage the work we already do in scientific writing
+
+- and provide access to reusable data/code
+
+- This does require development of a relatively new tool chain for writing
+
+- We have done this in Emacs + org-mode + code
+
+* Emacs + org-mode for reproducible, functional scientific documents  :slide:
+- org-mode is basically a plain text markup language deeply integrated into Emacs
+
+- Outline mode at the core, and much much more
+
+** sub-heading
+*** sub-sub-heading
+- Narrative text, equations \(\int_0^1 e^x dx\), images  [[./scientist.png]]
+Functional tables
+| a | b |
+|---+---|
+| 2 | 4 |
+| 0 | 1 |
+
+- citations cite:kitchin-2015-examp
+
+- Integrated functional code
+#+BEGIN_SRC sh
+date
+#+END_SRC
+
+- Functional links that can
+  - Open document locations  file:scientist.png
+  - Open mail, news, urls
+  - run user-defined code in almost any language
+
+- export to other formats
+  - LaTeX -> PDF
+  - HTML
+  - Word (limited)
+
+
+* We have used it extensively in scientific publishing		      :slide:
+- Over dozen papers in print illustrating what can be done
+
+- cite:hallenbeck-2013-effec-o2 - all experimental
+- cite:miller-2014-simul-temper - mixed experiment/computation
+- cite:xu-2014-relat - computational DFT on oxides
+- cite:xu-2014-probin-cover - computational coverage/site dependence
+- cite:curnan-2014-effec-concen - full sql database described in SI
+- cite:boes-2015-estim-bulk - exp/computation H2/D2 exchange on CuPd
+- cite:boes-2015-core-cu - exp/computation XPS on CuPd alloys
+- cite:xu-2015-linear-respon - 1.8 GB dataset on Zenodo
+- cite:xu-2015-accur-u - computation DFT+U
+- cite:kitchin-2015-data-surfac-scien - examples of reusing data
+- cite:kitchin-2015-examp - examples of reusing data
+- cite:boes-2016-neural-networ - Molecular simulation
+
+Let's see a working example
+- cite:mehta-2015-ident-poten The data is available in the SI
+
+- The json database described in SI file:am4059149_si_001.pdf (see Table 2 page 13)
+
+- The source can be extracted from the PDF (goto line 336)
+#+BEGIN_SRC sh
+pdftk am4059149_si_001.pdf  unpack_files
+#+END_SRC
+
+#+RESULTS:
+
+That SI file was generated here (goto line 336):
+file:supporting-information.org
+
+* Reusing the data						      :slide:
+That data is human readable - and machine addressable
+
+#+BEGIN_SRC emacs-lisp :var data=supporting-information.org:TiO2-data
+(remove-if-not (lambda (x) (string= "rutile" (nth 1 x))) data)
+#+END_SRC
+
+If you prefer Python, no problem:
+
+#+BEGIN_SRC python :var data=supporting-information.org:TiO2-data :results value
+return [x for x in data if x[1] == 'anatase']
+#+END_SRC
+
+* Automating data embedding sharing				      :slide:
+- org-mode is great - If you use org-mode
+- In an [[id:9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E][Appendix]] there is code that automatically embeds data and code in org-mode into HTML and PDF.
+- One source to many outputs
+
+- We can extract the source code and load it here
+#+BEGIN_SRC emacs-lisp :results silent
+(org-babel-tangle)
+(load-file "data-sharing.el")
+#+END_SRC
+
+** HTML export
+#+BEGIN_SRC emacs-lisp
+(custom-export-and-open-html)
+#+END_SRC
+
+#+RESULTS:
+: #<process open data-sharing.html>
+
+** PDF export
+#+BEGIN_SRC emacs-lisp
+(custom-export-and-open-pdf)
+#+END_SRC
+
+#+RESULTS:
+
+** Vanilla export
+
+[[elisp:(org-open-file (org-latex-export-to-pdf))]]
+
+* What makes this integration possible?
+- An extensible editor
+  - Extensible in a full programming language
+  - This allows the tool to become what you want
+  - Emacs is ideal for this
+
+- A lightweight markup language
+  - to differentiate text, code, data
+  - Org-mode is also ideal for this
+    - Part structured markup, part api
+    - Very good compromise on function and utility with authoring ease
+
+- </code>
+  Since we use code to generate and analyse data, this solution works especially well
+* Concluding thoughts						      :slide:
+
+- Emacs + org-mode + </code> enables a lot of very exciting capabilities in publishing and data sharing
+
+  - Integrated narrative text, data, code
+
+  - Export to a broad range of other formats
+
+  - Interaction with the world (other computers, instruments) via APIs
+
+    - Materials Project, translation, Internet of Things, ...
+
+- The future is very exciting
+
+- We are not waiting for someone to figure out what we want
+
+  - Anyway, by the time they deliver it we will need something else ;)
+
+* Getting started						      :slide:
+http://github.com/jkitchin/jmax
+
+Our starter-kit for Emacs + org-mode configured to do the things I showed you today
+
+Should work out of the box on Windows.
+
+Directions for using it on Mac/Linux.
+
+Your mileage may vary ;)
+
+Check out our YouTube channel: https://www.youtube.com/user/jrkitchin
+
+[[./org-ref.png]] 1333 views
+
+[[./awesome.png]] 20,984 views
+
+[[./scipy-2013.png]] 23,094 views!
+* Appendix
+  :PROPERTIES:
+  :ID:       9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E
+  :END:
+** The custom export code \label{export-code}
+Here we define a custom table exporter. We use the regular table export mechanism, but save the contents of the table as a csv file. We define exports for two backends: LaTeX and HTML. For LaTeX, we use the attachfile cite:pakin-attachfile package to embed the data file in the PDF. For HTML, we insert a link to the data file, and a data uri link to the HTML output. We store the filename of each generated table in a global variable named =*embedded-files*= so we can create a new Info metadata entry in the exported PDF.
+
+#+name: table-format
+#+BEGIN_SRC emacs-lisp :results silent :tangle data-sharing.el
+(defvar *embedded-files* '()
+  "List of files embedded in the output.")
+
+(defun my-table-format (table contents info)
+  (let* ((tblstart (org-element-property
+		    :contents-begin table))
+	 (tbl-data (save-excursion
+		     (goto-char tblstart)
+		     (org-babel-del-hlines
+		      (org-babel-read-table))))
+         (tblname (or (org-element-property :name table) (md5 (format "%s" tbl-data))))
+	 (format (elt (plist-get info :back-end) 2))
+	 (csv-file (concat tblname ".csv"))
+	 (data-uri-data))
+
+    ;; Here we convert the table data to a csv file
+    (with-temp-file csv-file
+      (loop for row in tbl-data
+	    do
+	    (insert
+	     (mapconcat
+	      (lambda (x) (format "\"%s\"" x))
+	      row
+	      ", " ))
+	    (insert "\n"))
+      (setq data-uri-data
+	    (base64-encode-string
+	     (buffer-string))))
+
+    (add-to-list '*embedded-files* csv-file)
+
+    (cond
+     ;; HTML export
+     ((eq format 'html)
+      (concat
+       (org-html-table table contents info)
+       (format "<a href=\"%s\">%s</a>"
+	       csv-file csv-file)
+       " "
+       (format (concat  "<a href=\"data:text/csv;"
+                        "charset=US-ASCII;"
+                        "base64,%s\">data uri</a>")
+	       data-uri-data)))
+     ;; LaTeX/PDF export
+     ((eq format 'latex)
+      (concat
+       (org-latex-table table contents info)
+       "\n"
+       (format "%s: \\attachfile{%s}"
+	       csv-file csv-file))))))
+#+END_SRC
+
+Next, we define an exporter for source blocks. We will write these to a file too, and put links to them in the exported files. We store the filename of each generated source file in a global variable named =*embedded-files*= so we can create a new Info metadata entry in the exported PDF.
+
+#+name: src-block-format
+#+BEGIN_SRC emacs-lisp :results silent :tangle data-sharing.el
+(defun my-src-block-format (src-block contents info)
+  "Custom export for src-blocks.
+Saves code in block for embedding. Provides backend-specific
+output."
+  (let* ((srcname (org-element-property :name src-block))
+	 (lang (org-element-property :language src-block))
+	 (value (org-element-property :value src-block))
+         (format (elt (plist-get info :back-end) 2))
+	 (exts '(("python" . ".py")
+		 ("emacs-lisp" . ".elisp")))
+	 (fname (concat
+		 (or srcname (md5 value))
+		 (cdr (assoc lang exts))))
+	 (data-uri-data))
+
+    (with-temp-file fname
+      (insert value)
+      (setq data-uri-data (base64-encode-string
+			   (buffer-string))))
+
+    (add-to-list '*embedded-files* fname)
+
+    (cond
+     ;; HTML export
+     ((eq format 'html)
+      (concat
+       (org-html-src-block src-block contents info)
+       (format "<a href=\"%s\">%s</a>" fname fname)
+       " "
+       (format (concat "<a href=\"data:text/%s;"
+                       "charset=US-ASCII;base64,"
+                       "%s\">code uri</a>")
+	       lang data-uri-data)))
+     ;; LaTeX/PDF export
+     ((eq format 'latex)
+      (concat
+       (org-latex-src-block src-block contents info)
+       "\n"
+       (format "%s: \\attachfile{%s}" fname fname))))))
+#+END_SRC
+
+Finally, we also modify the results of a code block so they will appear in a gray box and stand out from the text more clearly.
+
+#+BEGIN_SRC emacs-lisp :tangle data-sharing.el
+(defun my-results (fixed-width contents info)
+  "Transform a results block to make it more visible."
+  (let ((results (org-element-property :results fixed-width))
+	(format (elt (plist-get info :back-end) 2))
+	(value (org-element-property :value fixed-width)))
+    (cond
+     ((eq 'latex format)
+      (format "\\begin{tcolorbox}
+\\begin{verbatim}
+RESULTS: %s
+\\end{verbatim}
+\\end{tcolorbox}"
+	      value))
+     (t
+      (format "<pre>RESULTS: %s</pre>" value)))))
+#+END_SRC
+
+#+RESULTS:
+: my-results
+
+
+An author may also choose to embed a file into their document, using the attachfile package for LaTeX. Here, we leverage the ability of org-mode to create functional links that can be exported differently for LaTeX and HTML. We will create an attachfile link, and set it up to export as a LaTeX command or as a data URI for HTML.
+
+#+name: attachfile-link
+#+BEGIN_SRC emacs-lisp :results none :tangle data-sharing.el
+(org-add-link-type
+ "attachfile"
+ (lambda (path) (org-open-file path))
+ ;; formatting
+ (lambda (path desc format)
+   (cond
+    ((eq format 'html)
+     ;; we want a data URI to the file name
+     (let* ((content
+	     (with-temp-buffer
+	       (insert-file-contents path)
+	       (buffer-string)))
+	    (data-uri
+	     (base64-encode-string
+	      (encode-coding-string content 'utf-8))))
+       (add-to-list '*embedded-files* path)
+       (format (concat "<a href=\"data:;base64,"
+                       "%s\">%s</a>")
+	       data-uri
+	       path)))
+    ((eq format 'latex)
+     ;; write out the latex command
+     (add-to-list '*embedded-files* path)
+     (format "\\attachfile{%s}" path)))))
+#+END_SRC
+
+Here, we define a derived backend for HTML and LaTeX export. These are identical to the standard export backends, except for the modified behavior of the table and src-block elements.
+
+#+BEGIN_SRC emacs-lisp :results none :tangle data-sharing.el
+(org-export-define-derived-backend 'my-html 'html
+  :translate-alist '((table . my-table-format)
+		     (src-block . my-src-block-format)
+		     (fixed-width . my-results)))
+
+(org-export-define-derived-backend 'my-latex 'latex
+  :translate-alist '((table . my-table-format)
+                     (src-block . my-src-block-format)
+		     (fixed-width . my-results)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle data-sharing.el
+(defun custom-export-and-open-html ()
+  (let* ((base (file-name-nondirectory
+		(file-name-sans-extension (buffer-file-name))))
+	 (html (concat base ".html")))
+    (save-restriction (widen)
+		      (browse-url (org-export-to-file 'my-html html)))))
+
+(defun custom-export-and-open-pdf ()
+  (let* ((org-latex-image-default-width "")
+	 (*embedded-files* '())
+	 (base (file-name-nondirectory
+		(file-name-sans-extension (buffer-file-name))))
+	 (tex (concat base ".tex"))
+	 (pdf (concat base ".pdf"))
+	 (org-latex-minted-options
+	  (append
+	   org-latex-minted-options
+	   '(("xleftmargin" "\\parindent")))))
+    (org-export-to-file 'my-latex tex)
+    (ox-manuscript-latex-pdf-process tex)
+    (org-open-file pdf)))
+#+END_SRC
+
+
+bibliographystyle:unsrtnat
+
+bibliography:~/Dropbox/bibliography/references.bib
