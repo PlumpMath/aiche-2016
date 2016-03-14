@@ -4,12 +4,14 @@
 \maketitle
 \tableofcontents
 # elisp:(org-show-mode)
-* Title slide                                                         :slide:
+* Title slide                                        :slide:
 #+BEGIN_SRC emacs-lisp-slide :exports none
-(org-show-animate '("Authoring tools to automate data sharing\n in scientific publishing" "March, 14, 2016" "John Kitchin" "Carnegie Mellon University" "Chemical Engineering"))
+(org-show-animate '("Authoring tools to automate data sharing"
+ "in scientific publishing" "March, 14, 2016" "John Kitchin"
+ "Carnegie Mellon University" "Chemical Engineering"))
 #+END_SRC
 
-* Introduction                                                        :slide:
+* Introduction                                       :slide:
 - Data sharing is not easy
 
 - But it is increasingly required
@@ -24,7 +26,7 @@
 
 - We are working on tools that make that happen that I will talk about today
 
-* Why is data sharing hard today?                                     :slide:
+* Why is data sharing hard today?                    :slide:
 - For many scientific authors data and analysis are not integrated into writing tools
 
   - Think about a manuscript in MS Word/LaTeX
@@ -39,7 +41,7 @@
 
 - These tools are not especially well-integrated and not easily adapted to new use cases
 
-* Sharing is tedious, error prone                                     :slide:
+* Sharing is tedious, error prone                    :slide:
 
 - Sharing then becomes extra work to generate supporting information that reconstructs the effort, copies data you think you used, etc.
 
@@ -51,7 +53,7 @@
 
 - Yet increasingly required, and desired
 
-* Our approach to this issue is integration of tools/data             :slide:
+* Our approach to this issue is integration of tools/data :slide:
 
 - We developed an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
 
@@ -65,7 +67,7 @@
 
 - It is all open-source (http://github.com/jkitchin/jmax) and cross-platform
 
-* Emacs + org-mode for reproducible, functional scientific documents  :slide:
+* Emacs + org-mode for reproducible, functional scientific documents :slide:
 - org-mode is basically a plain text markup language deeply integrated into Emacs (an editor)
 
 - Outline mode at the core, and much much more
@@ -88,6 +90,9 @@ Functional tables
 date
 #+END_SRC
 
+#+RESULTS:
+: Mon Mar 14 13:11:05 PDT 2016
+
 - Functional links that can
   - Open document locations  file:scientist.png
   - Open mail, news, urls
@@ -98,13 +103,22 @@ import time
 print(time.asctime())
 #+END_SRC
 
+#+RESULTS:
+: Mon Mar 14 13:11:36 2016
+
 #+BEGIN_SRC emacs-lisp
 (current-time-string)
 #+END_SRC
 
+#+RESULTS:
+: Mon Mar 14 13:11:45 2016
+
 #+BEGIN_SRC R
 Sys.time()
 #+END_SRC
+
+#+RESULTS:
+: [1] "2016-03-14 13:11:51 PDT"
 
 #+BEGIN_SRC C
 #include <time.h>
@@ -121,7 +135,11 @@ int main() {
     return 0;
 }
 #+END_SRC
-* We have used it extensively in scientific publishing                :slide:
+#+RESULTS:
+: Mon Mar 14 13:11:56 2016
+
+
+* We have used it extensively in scientific publishing :slide:
 - Over dozen papers in print by my group illustrating what can be done
 
 - cite:hallenbeck-2013-effec-o2 - all experimental
@@ -150,12 +168,18 @@ pdftk am4059149_si_001.pdf  unpack_files
 That SI file was generated here (goto line 336):
 file:supporting-information.org
 
-* Reusing the data                                                    :slide:
+* Reusing the data                                   :slide:
 That data is human readable - and machine addressable
 
 #+BEGIN_SRC emacs-lisp :var data=supporting-information.org:TiO2-data
 (remove-if-not (lambda (x) (string= "rutile" (nth 1 x))) data)
 #+END_SRC
+
+#+RESULTS:
+| TiO$_2$ | rutile | LDA    | -2801.64 | 30.58 | 259.47 |
+| TiO$_2$ | rutile | AM05   | -2733.53 | 31.31 |  233.2 |
+| TiO$_2$ | rutile | PBEsol | -2759.29 | 31.22 | 239.76 |
+| TiO$_2$ | rutile | PBE    | -2773.21 | 32.11 | 215.78 |
 
 If you prefer Python, no problem. Here we get the anatase data:
 
@@ -163,7 +187,14 @@ If you prefer Python, no problem. Here we get the anatase data:
 return [x for x in data if x[1] == 'anatase']
 #+END_SRC
 
-* Automating data embedding sharing                                   :slide:
+#+RESULTS:
+| TiO$_2$ | anatase | LDA    | -2802.73 | 33.62 |  187.4 |
+| TiO$_2$ | anatase | AM05   | -2741.12 | 34.33 | 178.26 |
+| TiO$_2$ | anatase | PBEsol | -2763.61 | 34.25 | 178.71 |
+| TiO$_2$ | anatase | PBE    | -2781.16 | 35.13 | 171.42 |
+
+
+* Automating data embedding sharing                  :slide:
 - org-mode is great - If you use org-mode
 - In an [[id:9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E][Appendix]] there is code that automatically embeds data and code in org-mode into HTML and PDF.
 - One source to many outputs
@@ -190,7 +221,7 @@ return [x for x in data if x[1] == 'anatase']
 
 [[elisp:(org-open-file (org-latex-export-to-pdf))]]
 
-* What makes this integration possible?                               :slide:
+* What makes this integration possible?              :slide:
 - An extensible editor
   - Extensible in a full programming language
   - This allows the tool to become what you want
@@ -205,7 +236,7 @@ return [x for x in data if x[1] == 'anatase']
 - </code>
   Since we use code to generate and analyse data, this solution works especially well
 
-* Concluding thoughts                                                 :slide:
+* Concluding thoughts                                :slide:
 
 - Emacs + org-mode + </code> enables a lot of very exciting capabilities in publishing and data sharing
 
@@ -223,7 +254,7 @@ return [x for x in data if x[1] == 'anatase']
 
   - Anyway, by the time they deliver it we will need something else ;)
 
-* Extract the references                                              :slide:
+* Extract the references                             :slide:
 #+BEGIN_SRC emacs-lisp
 (save-window-excursion
  (save-restriction
@@ -232,10 +263,41 @@ return [x for x in data if x[1] == 'anatase']
  (buffer-string)))
 #+END_SRC
 
+#+RESULTS:
+#+begin_example
+  1. cite:kitchin-2015-examp Kitchin, John R., "Examples of Effective Data Sharing in Scientific Publishing", ACS Catalysis, 5:3894-3899 (2015)
+
+  2. cite:hallenbeck-2013-effec-o2 Hallenbeck, Alexander P. and Kitchin, John R., "Effects of \ce{O_2} and \ce{SO_2} on the Capture Capacity of a  Primary-Amine Based Polymeric \ce{CO_2} Sorbent", Industrial \& Engineering Chemistry Research, 52:10788-10794 (2013)
+
+  3. cite:miller-2014-simul-temper Spencer D. Miller and Vladimir V. Pushkarev and Andrew  J. Gellman and John R. Kitchin, "Simulating Temperature Programmed Desorption of Oxygen on  {P}t(111) Using {DFT} Derived Coverage Dependent Desorption  Barriers", Topics in Catalysis, 57:106-117 (2014)
+
+  4. cite:xu-2014-relat Zhongnan Xu and John R. Kitchin, "Relating the Electronic Structure and Reactivity of the 3d  Transition Metal Monoxide Surfaces", Catalysis Communications, 52:60-64 (2014)
+
+  5. cite:xu-2014-probin-cover Zhongnan Xu and John R. Kitchin, "Probing the Coverage Dependence of Site and Adsorbate  Configurational Correlations on (111) Surfaces of Late  Transition Metals", J. Phys. Chem. C, 118:25597-25602 (2014)
+
+  6. cite:curnan-2014-effec-concen Curnan, Matthew T. and Kitchin, John R., "Effects of Concentration, Crystal Structure, Magnetism, and  Electronic Structure Method on First-Principles Oxygen Vacancy  Formation Energy Trends in Perovskites", The Journal of Physical Chemistry C, 118:28776-28790 (2014)
+
+  7. cite:boes-2015-estim-bulk Jacob R. Boes and Gamze Gumuslu and James B. Miller and Andrew  J. Gellman and John R. Kitchin, "Estimating Bulk-Composition-Dependent \ce{H2} Adsorption  Energies on \ce{Cu_{x}Pd_{1-x}} Alloy (111) Surfaces", ACS Catalysis, 5:1020-1026 (2015)
+
+  8. cite:boes-2015-core-cu Jacob R. Boes and Peter Kondratyuk and Chunrong Yin and James  B. Miller and Andrew J. Gellman and John R. Kitchin, "Core Level Shifts in {Cu-Pd} Alloys As a Function of Bulk  Composition and Structure", Surface Science, 640:127-132 (2015)
+
+  9. cite:xu-2015-linear-respon Xu, Zhongnan and Rossmeisl, Jan and Kitchin, John R., "A Linear Response {DFT}+{U} Study of Trends in the Oxygen  Evolution Activity of Transition Metal Rutile Dioxides", The Journal of Physical Chemistry C, 119:4827-4833 (2015)
+
+ 10. cite:xu-2015-accur-u Xu, Zhongnan and Joshi, Yogesh V. and Raman, Sumathy and  Kitchin, John R., "Accurate Electronic and Chemical Properties of 3d Transition  Metal Oxides Using a Calculated Linear Response {U} and a {DFT  + U(V)} Method", The Journal of Chemical Physics, 142:144701 (2015)
+
+ 11. cite:kitchin-2015-data-surfac-scien John R. Kitchin, "Data Sharing in Surface Science", Surface Science , N/A:in press (2015)
+
+ 12. cite:boes-2016-neural-networ Jacob R. Boes and Mitchell C. Groenenboom and John A. Keith  and John R. Kitchin, "Neural Network and Reaxff Comparison for {Au} Properties", Accepted 1/2016, Int. J. Quantum Chemistry, : (2016)
+
+ 13. cite:mehta-2015-ident-poten Prateek Mehta and Paul A. Salvador and John R. Kitchin, "Identifying Potential \ce{BO2} Oxide Polymorphs for Epitaxial  Growth Candidates", ACS Appl. Mater. Interfaces, 6:3630-3639 (2015)
+
+ 14. cite:pakin-attachfile Scott Pakin, "attachfile", , : ()
+#+end_example
 
 
 
-* Getting started                                                     :slide:
+
+* Getting started                                    :slide:
 Source code:  http://github.com/jkitchin/jmax
 
 Our starter-kit for Emacs + org-mode configured to do the things I showed you today
