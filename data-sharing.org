@@ -3,23 +3,28 @@
 #+latex_header: \usepackage{attachfile}
 \maketitle
 \tableofcontents
-* Title slide							      :slide:
+# elisp:(org-show-mode)
+* Title slide                                                         :slide:
 #+BEGIN_SRC emacs-lisp-slide :exports none
-(org-show-animate '("Authoring tools to automate data sharing in scientific publishing" "March, 14, 2016" "John Kitchin" "Carnegie Mellon University"))
+(org-show-animate '("Authoring tools to automate data sharing\n in scientific publishing" "March, 14, 2016" "John Kitchin" "Carnegie Mellon University" "Chemical Engineering"))
 #+END_SRC
 
-* Introduction
+* Introduction                                                        :slide:
 - Data sharing is not easy
+
 - But it is increasingly required
+
 - And increasingly desired
 
-The big question is: "How do we make that happen?"
+            The big question is: "How do we make that happen?"
 
 - Nobody wants more work
-- We would all like to get more out of what we already do
-- We are working on tools that make that happen
 
-* Why is data sharing hard today?				      :slide:
+- We would all like to get more out of what we already do
+
+- We are working on tools that make that happen that I will talk about today
+
+* Why is data sharing hard today?                                     :slide:
 - For many scientific authors data and analysis are not integrated into writing tools
 
   - Think about a manuscript in MS Word/LaTeX
@@ -29,24 +34,26 @@ The big question is: "How do we make that happen?"
   - all with limited interconnectivity
 
      - e.g. where is the data in Fig 2 of the manuscript?
-     - Where is the script that did the data analysis?
+     - Where is the file/script that did the data analysis?
      - How do I reuse the data in Table 2 for a new purpose? Copy and Paste?
 
 - These tools are not especially well-integrated and not easily adapted to new use cases
 
-- You can hyperlink/embed data in some of these tools,
-  but this isn't supported by most publishers
+* Sharing is tedious, error prone                                     :slide:
 
-- Sharing then becomes extra work to generate supporting information that reconstructs the effort
+- Sharing then becomes extra work to generate supporting information that reconstructs the effort, copies data you think you used, etc.
 
 - Reconstruction of the work that went into the manuscript is error prone
 
 - and tedious...
 
-- Yet increasingly required, and desired
-* Our approach to this issue is integration			      :slide:
+- Reuse is not much better
 
-- We propose that an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
+- Yet increasingly required, and desired
+
+* Our approach to this issue is integration of tools/data             :slide:
+
+- We developed an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
 
 - It would leverage the work we already do in scientific writing
 
@@ -56,14 +63,18 @@ The big question is: "How do we make that happen?"
 
 - We have done this in Emacs + org-mode + code
 
+- It is all open-source (http://github.com/jkitchin/jmax) and cross-platform
+
 * Emacs + org-mode for reproducible, functional scientific documents  :slide:
-- org-mode is basically a plain text markup language deeply integrated into Emacs
+- org-mode is basically a plain text markup language deeply integrated into Emacs (an editor)
 
 - Outline mode at the core, and much much more
 
 ** sub-heading
-*** sub-sub-heading
 - Narrative text, equations \(\int_0^1 e^x dx\), images  [[./scientist.png]]
+
+*** sub-sub-heading
+
 Functional tables
 | a | b |
 |---+---|
@@ -82,14 +93,36 @@ date
   - Open mail, news, urls
   - run user-defined code in almost any language
 
-- export to other formats
-  - LaTeX -> PDF
-  - HTML
-  - Word (limited)
+#+BEGIN_SRC python
+import time
+print(time.asctime())
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(current-time-string)
+#+END_SRC
 
-* We have used it extensively in scientific publishing		      :slide:
-- Over dozen papers in print illustrating what can be done
+#+BEGIN_SRC R
+Sys.time()
+#+END_SRC
+
+#+BEGIN_SRC C
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main() {
+    time_t current_time;
+    char* c_time_string;
+    current_time = time(NULL);
+    /* Convert to local time format. */
+    c_time_string = ctime(&current_time);
+    printf("%s", c_time_string);
+    return 0;
+}
+#+END_SRC
+* We have used it extensively in scientific publishing                :slide:
+- Over dozen papers in print by my group illustrating what can be done
 
 - cite:hallenbeck-2013-effec-o2 - all experimental
 - cite:miller-2014-simul-temper - mixed experiment/computation
@@ -110,29 +143,27 @@ Let's see a working example
 - The json database described in SI file:am4059149_si_001.pdf (see Table 2 page 13)
 
 - The source can be extracted from the PDF (goto line 336)
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :results silent
 pdftk am4059149_si_001.pdf  unpack_files
 #+END_SRC
-
-#+RESULTS:
 
 That SI file was generated here (goto line 336):
 file:supporting-information.org
 
-* Reusing the data						      :slide:
+* Reusing the data                                                    :slide:
 That data is human readable - and machine addressable
 
 #+BEGIN_SRC emacs-lisp :var data=supporting-information.org:TiO2-data
 (remove-if-not (lambda (x) (string= "rutile" (nth 1 x))) data)
 #+END_SRC
 
-If you prefer Python, no problem:
+If you prefer Python, no problem. Here we get the anatase data:
 
 #+BEGIN_SRC python :var data=supporting-information.org:TiO2-data :results value
 return [x for x in data if x[1] == 'anatase']
 #+END_SRC
 
-* Automating data embedding sharing				      :slide:
+* Automating data embedding sharing                                   :slide:
 - org-mode is great - If you use org-mode
 - In an [[id:9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E][Appendix]] there is code that automatically embeds data and code in org-mode into HTML and PDF.
 - One source to many outputs
@@ -144,12 +175,9 @@ return [x for x in data if x[1] == 'anatase']
 #+END_SRC
 
 ** HTML export
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (custom-export-and-open-html)
 #+END_SRC
-
-#+RESULTS:
-: #<process open data-sharing.html>
 
 ** PDF export
 #+BEGIN_SRC emacs-lisp
@@ -162,7 +190,7 @@ return [x for x in data if x[1] == 'anatase']
 
 [[elisp:(org-open-file (org-latex-export-to-pdf))]]
 
-* What makes this integration possible?
+* What makes this integration possible?                               :slide:
 - An extensible editor
   - Extensible in a full programming language
   - This allows the tool to become what you want
@@ -176,7 +204,8 @@ return [x for x in data if x[1] == 'anatase']
 
 - </code>
   Since we use code to generate and analyse data, this solution works especially well
-* Concluding thoughts						      :slide:
+
+* Concluding thoughts                                                 :slide:
 
 - Emacs + org-mode + </code> enables a lot of very exciting capabilities in publishing and data sharing
 
@@ -194,24 +223,39 @@ return [x for x in data if x[1] == 'anatase']
 
   - Anyway, by the time they deliver it we will need something else ;)
 
-* Getting started						      :slide:
-http://github.com/jkitchin/jmax
+* Extract the references                                              :slide:
+#+BEGIN_SRC emacs-lisp
+(save-window-excursion
+ (save-restriction
+ (widen)
+ (org-ref-bibliography)
+ (buffer-string)))
+#+END_SRC
+
+
+
+
+* Getting started                                                     :slide:
+Source code:  http://github.com/jkitchin/jmax
 
 Our starter-kit for Emacs + org-mode configured to do the things I showed you today
+Should work out of the box on Windows. Directions for using it on Mac/Linux.
 
-Should work out of the box on Windows.
+Kitchingroup blog: http://kitchingroup.cheme.cmu.edu
 
-Directions for using it on Mac/Linux.
-
-Your mileage may vary ;)
+@johnkitchin [[./tweet-org-ref.png]]
 
 Check out our YouTube channel: https://www.youtube.com/user/jrkitchin
 
-[[./org-ref.png]] 1333 views
+[[./org-ref.png]] 1333 views  (1800+ downloads of org-ref on MELPA!)
+
 
 [[./awesome.png]] 20,984 views
 
 [[./scipy-2013.png]] 23,094 views!
+
+This talk: https://github.com/jkitchin/ACS-2016-data-sharing
+
 * Appendix
   :PROPERTIES:
   :ID:       9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E
@@ -286,7 +330,9 @@ output."
 	 (value (org-element-property :value src-block))
          (format (elt (plist-get info :back-end) 2))
 	 (exts '(("python" . ".py")
-		 ("emacs-lisp" . ".elisp")))
+		 ("emacs-lisp" . ".elisp")
+		 ("C" . ".c")
+		 ("R" . ".R")))
 	 (fname (concat
 		 (or srcname (md5 value))
 		 (cdr (assoc lang exts))))
@@ -395,22 +441,30 @@ Here, we define a derived backend for HTML and LaTeX export. These are identical
 		      (browse-url (org-export-to-file 'my-html html)))))
 
 (defun custom-export-and-open-pdf ()
-  (let* ((org-latex-image-default-width "")
-	 (*embedded-files* '())
-	 (base (file-name-nondirectory
-		(file-name-sans-extension (buffer-file-name))))
-	 (tex (concat base ".tex"))
-	 (pdf (concat base ".pdf"))
-	 (org-latex-minted-options
-	  (append
-	   org-latex-minted-options
-	   '(("xleftmargin" "\\parindent")))))
-    (org-export-to-file 'my-latex tex)
-    (ox-manuscript-latex-pdf-process tex)
-    (org-open-file pdf)))
+  (save-restriction
+    (widen)
+    (let* ((org-latex-image-default-width "")
+	   (*embedded-files* '())
+	   (base (file-name-nondirectory
+		  (file-name-sans-extension (buffer-file-name))))
+	   (tex (concat base ".tex"))
+	   (pdf (concat base ".pdf"))
+	   (org-latex-minted-options
+	    (append
+	     org-latex-minted-options
+	     '(("xleftmargin" "\\parindent")))))
+      (org-export-to-file 'my-latex tex)
+      (ox-manuscript-latex-pdf-process tex)
+      (org-open-file pdf))))
 #+END_SRC
 
 
 bibliographystyle:unsrtnat
 
 bibliography:~/Dropbox/bibliography/references.bib
+
+
+
+# Local Variables:
+# org-image-actual-width: t
+# End:
