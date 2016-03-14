@@ -434,6 +434,7 @@ Here, we define a derived backend for HTML and LaTeX export. These are identical
 
 #+BEGIN_SRC emacs-lisp :tangle data-sharing.el
 (defun custom-export-and-open-html ()
+  "Use my-html custom exporter and open the file."
   (let* ((base (file-name-nondirectory
 		(file-name-sans-extension (buffer-file-name))))
 	 (html (concat base ".html")))
@@ -441,6 +442,7 @@ Here, we define a derived backend for HTML and LaTeX export. These are identical
 		      (browse-url (org-export-to-file 'my-html html)))))
 
 (defun custom-export-and-open-pdf ()
+  "Use my-latex custom exporter and open pdf."
   (save-restriction
     (widen)
     (let* ((org-latex-image-default-width "")
