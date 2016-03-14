@@ -1,6 +1,7 @@
 #+TITLE: Authoring tools to automate data sharing in scientific publishing
 #+options: tags:nil toc:nil
 #+latex_header: \usepackage{attachfile}
+#+latex_header: \usepackage{tcolorbox}
 \maketitle
 \tableofcontents
 # elisp:(org-show-mode)
@@ -158,7 +159,8 @@ int main() {
 Let's see a working example
 - cite:mehta-2015-ident-poten The data is available in the SI
 
-- The json database described in SI file:am4059149_si_001.pdf (see Table 2 page 13)
+- The json database described in SI
+# file:am4059149_si_001.pdf (see Table 2 page 13)
 
 - The source can be extracted from the PDF (goto line 336)
 #+BEGIN_SRC sh :results silent
