@@ -1,0 +1,1 @@
+(remove-if-not (lambda (x) (string= "rutile" (nth 1 x))) data)

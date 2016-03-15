@@ -5,14 +5,14 @@
 \maketitle
 \tableofcontents
 # elisp:(org-show-mode)
-* Title slide                                        :slide:
+* Title slide                                                         :slide:
 #+BEGIN_SRC emacs-lisp-slide :exports none
 (org-show-animate '("Authoring tools to automate data sharing"
  "in scientific publishing" "March, 14, 2016" "John Kitchin"
  "Carnegie Mellon University" "Chemical Engineering"))
 #+END_SRC
 
-* Introduction                                       :slide:
+* Introduction                                                        :slide:
 - Data sharing is not easy
 
 - But it is increasingly required
@@ -27,7 +27,7 @@
 
 - We are working on tools that make that happen that I will talk about today
 
-* Why is data sharing hard today?                    :slide:
+* Why is data sharing hard today?                                     :slide:
 - For many scientific authors data and analysis are not integrated into writing tools
 
   - Think about a manuscript in MS Word/LaTeX
@@ -42,7 +42,7 @@
 
 - These tools are not especially well-integrated and not easily adapted to new use cases
 
-* Sharing is tedious, error prone                    :slide:
+* Sharing is tedious, error prone                                     :slide:
 
 - Sharing then becomes extra work to generate supporting information that reconstructs the effort, copies data you think you used, etc.
 
@@ -54,7 +54,7 @@
 
 - Yet increasingly required, and desired
 
-* Our approach to this issue is integration of tools/data :slide:
+* Our approach to this issue is integration of tools/data             :slide:
 
 - We developed an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
 
@@ -68,7 +68,7 @@
 
 - It is all open-source (http://github.com/jkitchin/jmax) and cross-platform
 
-* Emacs + org-mode for reproducible, functional scientific documents :slide:
+* Emacs + org-mode for reproducible, functional scientific documents  :slide:
 - org-mode is basically a plain text markup language deeply integrated into Emacs (an editor)
 
 - Outline mode at the core, and much much more
@@ -140,7 +140,7 @@ int main() {
 : Mon Mar 14 13:11:56 2016
 
 
-* We have used it extensively in scientific publishing :slide:
+* We have used it extensively in scientific publishing                :slide:
 - Over dozen papers in print by my group illustrating what can be done
 
 - cite:hallenbeck-2013-effec-o2 - all experimental
@@ -170,7 +170,7 @@ pdftk am4059149_si_001.pdf  unpack_files
 That SI file was generated here (goto line 336):
 file:supporting-information.org
 
-* Reusing the data                                   :slide:
+* Reusing the data                                                    :slide:
 That data is human readable - and machine addressable
 
 #+BEGIN_SRC emacs-lisp :var data=supporting-information.org:TiO2-data
@@ -196,7 +196,7 @@ return [x for x in data if x[1] == 'anatase']
 | TiO$_2$ | anatase | PBE    | -2781.16 | 35.13 | 171.42 |
 
 
-* Automating data embedding sharing                  :slide:
+* Automating data embedding sharing                                   :slide:
 - org-mode is great - If you use org-mode
 - In an [[id:9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E][Appendix]] there is code that automatically embeds data and code in org-mode into HTML and PDF.
 - One source to many outputs
@@ -223,7 +223,7 @@ return [x for x in data if x[1] == 'anatase']
 
 [[elisp:(org-open-file (org-latex-export-to-pdf))]]
 
-* What makes this integration possible?              :slide:
+* What makes this integration possible?                               :slide:
 - An extensible editor
   - Extensible in a full programming language
   - This allows the tool to become what you want
@@ -238,7 +238,7 @@ return [x for x in data if x[1] == 'anatase']
 - </code>
   Since we use code to generate and analyse data, this solution works especially well
 
-* Concluding thoughts                                :slide:
+* Concluding thoughts                                                 :slide:
 
 - Emacs + org-mode + </code> enables a lot of very exciting capabilities in publishing and data sharing
 
@@ -256,7 +256,7 @@ return [x for x in data if x[1] == 'anatase']
 
   - Anyway, by the time they deliver it we will need something else ;)
 
-* Extract the references                             :slide:
+* Extract the references                                              :slide:
 #+BEGIN_SRC emacs-lisp
 (save-window-excursion
  (save-restriction
@@ -299,7 +299,7 @@ return [x for x in data if x[1] == 'anatase']
 
 
 
-* Getting started                                    :slide:
+* Getting started                                                     :slide:
 Source code:  http://github.com/jkitchin/jmax
 
 Our starter-kit for Emacs + org-mode configured to do the things I showed you today

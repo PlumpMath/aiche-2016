@@ -1,0 +1,15 @@
+(defun my-results (fixed-width contents info)
+  "Transform a results block to make it more visible."
+  (let ((results (org-element-property :results fixed-width))
+	(format (elt (plist-get info :back-end) 2))
+	(value (org-element-property :value fixed-width)))
+    (cond
+     ((eq 'latex format)
+      (format "\\begin{tcolorbox}
+\\begin{verbatim}
+RESULTS: %s
+\\end{verbatim}
+\\end{tcolorbox}"
+	      value))
+     (t
+      (format "<pre>RESULTS: %s</pre>" value)))))

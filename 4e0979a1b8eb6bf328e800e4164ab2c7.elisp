@@ -1,0 +1,5 @@
+(save-window-excursion
+ (save-restriction
+ (widen)
+ (org-ref-bibliography)
+ (buffer-string)))

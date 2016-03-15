@@ -1,0 +1,25 @@
+(defun custom-export-and-open-html ()
+  "Use my-html custom exporter and open the file."
+  (let* ((base (file-name-nondirectory
+		(file-name-sans-extension (buffer-file-name))))
+	 (html (concat base ".html")))
+    (save-restriction (widen)
+		      (browse-url (org-export-to-file 'my-html html)))))
+
+(defun custom-export-and-open-pdf ()
+  "Use my-latex custom exporter and open pdf."
+  (save-restriction
+    (widen)
+    (let* ((org-latex-image-default-width "")
+	   (*embedded-files* '())
+	   (base (file-name-nondirectory
+		  (file-name-sans-extension (buffer-file-name))))
+	   (tex (concat base ".tex"))
+	   (pdf (concat base ".pdf"))
+	   (org-latex-minted-options
+	    (append
+	     org-latex-minted-options
+	     '(("xleftmargin" "\\parindent")))))
+      (org-export-to-file 'my-latex tex)
+      (ox-manuscript-latex-pdf-process tex)
+      (org-open-file pdf))))

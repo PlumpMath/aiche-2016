@@ -1,0 +1,24 @@
+(org-add-link-type
+ "attachfile"
+ (lambda (path) (org-open-file path))
+ ;; formatting
+ (lambda (path desc format)
+   (cond
+    ((eq format 'html)
+     ;; we want a data URI to the file name
+     (let* ((content
+	     (with-temp-buffer
+	       (insert-file-contents path)
+	       (buffer-string)))
+	    (data-uri
+	     (base64-encode-string
+	      (encode-coding-string content 'utf-8))))
+       (add-to-list '*embedded-files* path)
+       (format (concat "<a href=\"data:;base64,"
+                       "%s\">%s</a>")
+	       data-uri
+	       path)))
+    ((eq format 'latex)
+     ;; write out the latex command
+     (add-to-list '*embedded-files* path)
+     (format "\\attachfile{%s}" path)))))
