@@ -1,0 +1,12 @@
+#+TITLE: Authoring tools to automate data sharing in scientific publishing
+#+AUTHOR: John Kitchin
+
+#+begin_abstract
+Abstract: Data sharing and reproducibility of research are increasingly important issues. Funding agencies are mandating data sharing in calls for proposals, and journals are increasingly requiring data sharing as a condition of publication. Scientists are increasingly interested in open access to data. A requirement, or even desire to share is not sufficient, however, if sharing is difficult or tedious. We believe that new authoring tools are needed that will integrate data and analysis into the research and publishing processes. These tools will reduce the difficulty of sharing and reusing data.
+
+We have developed a new approach to writing scientific documents that enables the direct inclusion of human-readable, and machine-addressable data and code. In this talk we will illustrate the approach by example from papers we have recently published using the approach. We show that the combination of an extensible editor (Emacs) with a lightweight markup language (org-mode) provides a remarkable solution to data sharing and research reproducibility issues. This combination enables the documentation of experimental setup, data generation, and analysis in a single document, and subsequent export of a scientific manuscript that is suitable for submission to most journals. When coupled with external data repositories, the approach enables sharing of large or complex data sets that cannot easily be captured in a manuscript. We will conclude with an outlook on the approach and where we see it going.
+#+end_abstract
+
+This repo contains the [[data-sharing.org]["slides"]] for the talk I gave at the Spring 2016 ACS meeting in San Diego.
+
+You may prefer the [[./data-sharing.pdf][PDF version]] or the [[./data-sharing.html][HTML version]].
