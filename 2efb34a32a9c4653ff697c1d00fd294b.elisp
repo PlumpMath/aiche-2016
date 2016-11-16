@@ -1,9 +1,0 @@
-(org-export-define-derived-backend 'my-html 'html
-  :translate-alist '((table . my-table-format)
-		     (src-block . my-src-block-format)
-		     (fixed-width . my-results)))
-
-(org-export-define-derived-backend 'my-latex 'latex
-  :translate-alist '((table . my-table-format)
-                     (src-block . my-src-block-format)
-		     (fixed-width . my-results)))

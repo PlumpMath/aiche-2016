@@ -1,23 +1,45 @@
-#+TITLE: Authoring tools to automate data sharing in scientific publishing
+#+TITLE: Expanding Molecular Simulation Use by Data/Code Sharing in Scientific Publishing
 #+options: tags:nil toc:nil
 #+latex_header: \usepackage{attachfile}
 #+latex_header: \usepackage{tcolorbox}
 \maketitle
 \tableofcontents
-# elisp:(org-show-mode)
+[[elisp:(progn (org-show-mode)(org-show-start-slideshow))]]
+
 * Title slide                                                         :slide:
 #+BEGIN_SRC emacs-lisp-slide :exports none
-(org-show-animate '("Authoring tools to automate data sharing"
- "in scientific publishing" "March, 14, 2016" "John Kitchin"
+(org-show-animate '("Expanding Molecular Simulation Use "
+"by Data/Code Sharing in Scientific Publishing" "November, 16, 2016" "John Kitchin"
  "Carnegie Mellon University" "Chemical Engineering"))
 #+END_SRC
 
-* Introduction                                                        :slide:
-- Data sharing is not easy
+* Molecular simulation has many parts                                 :slide:
 
-- But it is increasingly required
+- Science and engineering
 
-- And increasingly desired
+- Code
+  - Simulation and analysis
+
+- Data
+  - Raw, derived
+
+- Effective communication of all three elements is required for it to have impact
+
+If our goal is expanding the use of molecular simulation, we need to make it easier to learn how to do it.
+
+We are a limited resource
+  - We have tremendous knowledge in our minds that is difficult to get to
+  - It is not easy to see how we do our work
+
+Publications, in contrast, are much more accessible and can be a great starting point to learn from
+  - But there is much room for improvement
+  - There are limited tools that enable effective communication without tremendous effort
+
+* Data/code sharing is not easy                                       :slide:
+
+- But it is increasingly required by federal regulations for federally funded research
+
+- And increasingly desired by the scientific community
 
             The big question is: "How do we make that happen?"
 
@@ -25,48 +47,51 @@
 
 - We would all like to get more out of what we already do
 
+- We have to think about making what we do today easier for us to do again tomorrow
+
 - We are working on tools that make that happen that I will talk about today
+
+- I will promote the idea that we need new tools, and new ways to do our work
+
+  - I will show by example what becomes possible with these in terms of data/code sharing
 
 * Why is data sharing hard today?                                     :slide:
 - For many scientific authors data and analysis are not integrated into writing tools
 
-  - Think about a manuscript in MS Word/LaTeX
-  - Data in Excel, data files,...
-  - Plots in Origin/SigmaPlot/etc.
+  - Think about a manuscript in MS Word/LaTeX/Overleaf/Authorea/...
+  - Bibliography in some file (Endnote, Bibtex, Mendeley, Zotero, ...)
+  - Data in Excel, text/binary files,...
+  - Plots in Origin/SigmaPlot/Matlab/Python/Excel/etc.
   - Separate script files for analysis
   - all with limited interconnectivity
 
      - e.g. where is the data in Fig 2 of the manuscript?
-     - Where is the file/script that did the data analysis?
-     - How do I reuse the data in Table 2 for a new purpose? Copy and Paste?
+     - How do I reuse the data in Figure/Table 2 for a new purpose? Copy and Paste?
 
 - These tools are not especially well-integrated and not easily adapted to new use cases
 
-* Sharing is tedious, error prone                                     :slide:
+- Github, bitbucket, Zenodo, figshare, etc. make it easier than ever to put code/data out there
+  - but without the codes and analysis that was used, it is harder to figure out than it needs to be
 
-- Sharing then becomes extra work to generate supporting information that reconstructs the effort, copies data you think you used, etc.
+- It is the combination of science, code and data that we need to understand what the research is about.
 
-- Reconstruction of the work that went into the manuscript is error prone
 
-- and tedious...
+* We built new tools to make it possible                              :slide:
 
-- Reuse is not much better
+- We developed an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process
 
-- Yet increasingly required, and desired
+- They leverage the work we already do in scientific writing and provide access to reusable data/code
 
-* Our approach to this issue is integration of tools/data             :slide:
+- This required development of a new tool chain for writing (both narrative text and code)
 
-- We developed an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
+- It required thinking about how to do the the research in an intrinsically reproducible and sharable way
 
-- It would leverage the work we already do in scientific writing
-
-- and provide access to reusable data/code
-
-- This does require development of a relatively new tool chain for writing
+- Our approach is: First make it helpful to you, then make it is useful to others.
 
 - We have done this in Emacs + org-mode + code
 
-- It is all open-source (http://github.com/jkitchin/jmax) and cross-platform
+- It is all open-source (http://github.com/jkitchin/scimax) and cross-platform
+
 
 * Emacs + org-mode for reproducible, functional scientific documents  :slide:
 - org-mode is basically a plain text markup language deeply integrated into Emacs (an editor)
@@ -74,53 +99,35 @@
 - Outline mode at the core, and much much more
 
 ** sub-heading
-- Narrative text, equations \(\int_0^1 e^x dx\), images  [[./scientist.png]]
+- Fancy bold, italic, colored text, big and little fonts, Comic Sans, notes
+
+- Narrative text, equations \(\int_0^1 e^x dx\), 
+
+#+attr_org: :width 100%
+#+name: emoji
+  [[./scientist.png]]
 
 *** sub-sub-heading
 
 Functional tables
+#+name: data
 | a | b |
 |---+---|
-| 2 | 4 |
 | 0 | 1 |
+| 2 | 4 |
+| 3 | 4 |
 
-- citations cite:kitchin-2015-examp
-
-- Integrated functional code
-#+BEGIN_SRC sh
-date
-#+END_SRC
-
-#+RESULTS:
-: Mon Mar 14 13:11:05 PDT 2016
 
 - Functional links that can
   - Open document locations  file:scientist.png
   - Open mail, news, urls
-  - run user-defined code in almost any language
 
-#+BEGIN_SRC python
-import time
-print(time.asctime())
-#+END_SRC
+- citations cite:kitchin-2015-examp ref:emoji  ref:data 
 
-#+RESULTS:
-: Mon Mar 14 13:11:36 2016
+- Run user-defined code in almost any language
+  - The output of one block can be the input to another
 
-#+BEGIN_SRC emacs-lisp
-(current-time-string)
-#+END_SRC
-
-#+RESULTS:
-: Mon Mar 14 13:11:45 2016
-
-#+BEGIN_SRC R
-Sys.time()
-#+END_SRC
-
-#+RESULTS:
-: [1] "2016-03-14 13:11:51 PDT"
-
+#+name: c-block
 #+BEGIN_SRC C
 #include <time.h>
 #include <stdlib.h>
@@ -136,52 +143,66 @@ int main() {
     return 0;
 }
 #+END_SRC
-#+RESULTS:
-: Mon Mar 14 13:11:56 2016
 
 
-* We have used it extensively in scientific publishing                :slide:
-- Over dozen papers in print by my group illustrating what can be done
+#+name: python-block
+#+BEGIN_SRC python :results output org drawer :var data=c-block
+print('c-block was last run on {}'.format(data))
+#+END_SRC
+
+#+BEGIN_SRC sh :var data=python-block
+echo "python block output: " $data
+#+END_SRC
+
+This is just a fraction of its capability!
+
+* We use it extensively in scientific publishing                      :slide:
+  :PROPERTIES:
+  :ID:       5F302B30-2BC8-4599-BB4B-614E9159EC69
+  :END:
+- [[../../../../../../../vc/techela/techela-admin/s16-06640/course/dft-book/dft.org::9288][Modeling materials with density functional theory]]
+- [[../../../../../../books/pycse/pycse.org::5610][PYCSE]]
+- 15 papers and growing in print by my group illustrating what can be done with this approach
 
 - cite:hallenbeck-2013-effec-o2 - all experimental
 - cite:miller-2014-simul-temper - mixed experiment/computation
 - cite:xu-2014-relat - computational DFT on oxides
 - cite:xu-2014-probin-cover - computational coverage/site dependence
 - cite:curnan-2014-effec-concen - full sql database described in SI
-- cite:boes-2015-estim-bulk - exp/computation H2/D2 exchange on CuPd
+- cite:boes-2015-estim-bulk - exp/computation H_{2}/D_{2} exchange on CuPd
 - cite:boes-2015-core-cu - exp/computation XPS on CuPd alloys
 - cite:xu-2015-linear-respon - 1.8 GB dataset on Zenodo
 - cite:xu-2015-accur-u - computation DFT+U
 - cite:kitchin-2015-data-surfac-scien - examples of reusing data
 - cite:kitchin-2015-examp - examples of reusing data
-- cite:boes-2016-neural-networ - Molecular simulation
+- cite:thirumalai-2015-pt-pd - van der Waals coverage dependence
+- cite:boes-2016-neural-networ - Molecular simulation via machine learning
+- cite:kitchin-2016-autom-data - Automating data sharing
 
 Let's see a working example
 - cite:mehta-2015-ident-poten The data is available in the SI
 
-- The json database described in SI
-# file:am4059149_si_001.pdf (see Table 2 page 13)
+- The json database is described in SI
 
-- The source can be extracted from the PDF (goto line 336)
+ file:am4059149_si_001.pdf (see Table 2 page 13)
+
+- The source can be extracted from the PDF 
 #+BEGIN_SRC sh :results silent
 pdftk am4059149_si_001.pdf  unpack_files
 #+END_SRC
 
-That SI file was generated here (goto line 336):
-file:supporting-information.org
+That SI file was generated from this file:
+file:supporting-information.org::336
 
 * Reusing the data                                                    :slide:
 That data is human readable - and machine addressable
 
+We can extract and reuse the data from the original document.
+
 #+BEGIN_SRC emacs-lisp :var data=supporting-information.org:TiO2-data
-(remove-if-not (lambda (x) (string= "rutile" (nth 1 x))) data)
+(remove-if-not (lambda (x) (string= "LDA" (nth 2 x))) data)
 #+END_SRC
 
-#+RESULTS:
-| TiO$_2$ | rutile | LDA    | -2801.64 | 30.58 | 259.47 |
-| TiO$_2$ | rutile | AM05   | -2733.53 | 31.31 |  233.2 |
-| TiO$_2$ | rutile | PBEsol | -2759.29 | 31.22 | 239.76 |
-| TiO$_2$ | rutile | PBE    | -2773.21 | 32.11 | 215.78 |
 
 If you prefer Python, no problem. Here we get the anatase data:
 
@@ -189,44 +210,82 @@ If you prefer Python, no problem. Here we get the anatase data:
 return [x for x in data if x[1] == 'anatase']
 #+END_SRC
 
-#+RESULTS:
-| TiO$_2$ | anatase | LDA    | -2802.73 | 33.62 |  187.4 |
-| TiO$_2$ | anatase | AM05   | -2741.12 | 34.33 | 178.26 |
-| TiO$_2$ | anatase | PBEsol | -2763.61 | 34.25 | 178.71 |
-| TiO$_2$ | anatase | PBE    | -2781.16 | 35.13 | 171.42 |
+We can do analysis in our document, and control what gets exported!
 
+#+BEGIN_SRC python :results output org drawer :exports results
+import pycse.orgmode as org
+import json
+import matplotlib.pyplot as plt
+from ase.utils.eos import EquationOfState
+with open('supporting-information.json', 'r') as f:
+    d = json.loads(f.read())
 
-* Automating data embedding sharing                                   :slide:
-- org-mode is great - If you use org-mode
-- In an [[id:9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E][Appendix]] there is code that automatically embeds data and code in org-mode into HTML and PDF.
-- One source to many outputs
+BO2 = 'VO2'
+polymorph = 'pyrite'
+xc = 'LDA'
 
-- We can extract the source code and load it here
-#+BEGIN_SRC emacs-lisp :results silent
-(org-babel-tangle)
-(load-file "data-sharing.el")
+volumes = [entry['data']['volume'] for entry in
+	   d[BO2][polymorph][xc]['EOS']['calculations']]
+energies =  [entry['data']['total_energy'] for entry in
+	     d[BO2][polymorph][xc]['EOS']['calculations']]
+
+# Plotting EOS
+plt.plot(volumes, energies)
+plt.xlabel('Volume (Å$^3$)')
+plt.ylabel('Energy (eV)')
+org.figure(plt.savefig('eos.png'), caption='VO2 pyrite EOS for the LDA functional.')
 #+END_SRC
 
-** HTML export
-#+BEGIN_SRC emacs-lisp :results silent
-(custom-export-and-open-html)
+
+** export                                                          :noexport:
+[[elisp:(browse-url (let ((org-export-babel-evaluate t)) (org-html-export-to-html)))]]
+
+
+* But I do not use Emacs ;(                                           :slide:
+
+Its ok. There is still time to change ;)
+
+org-mode has a syntax that can be parsed to a data tree, and transformed by other languages.
+
+There are growing APIs that allow you to use command line tools to extract data in the language of your choice.
+
+Emacs is the most developed, with over a decade of efforts by hundreds of people. Emacs is 40+ years old with a substantial number of developer-years behind it.
+
+Here is an example of data in an org-file.
+
+#+name: elbonian-random-data
+| 3 |
+| 3 |
+| 3 |
+| 3 |
+| 3 |
+
+We can open a shell: elisp:bash and run a command-line utility to extract the data.
+ 
+#+BEGIN_SRC sh
+./py_org_table.py data-sharing.org elbonian-random-data
 #+END_SRC
 
-** PDF export
-#+BEGIN_SRC emacs-lisp
-(custom-export-and-open-pdf)
+Alternatively, you can write a Python script to do this.
+
+#+BEGIN_SRC python :results output org drawer
+from py_org_table import *
+import pycse.orgmode as org
+import matplotlib.pyplot as plt
+
+data = read_org_table('data-sharing.org', 'elbonian-random-data')
+plt.plot(data, 'bo-')
+plt.xlabel('index')
+plt.ylabel('rnd')
+plt.title("That's the trouble with random. You just never know.")
+org.figure(plt.savefig('elbonian-random.png'))
 #+END_SRC
 
-#+RESULTS:
-
-** Vanilla export
-
-[[elisp:(org-open-file (org-latex-export-to-pdf))]]
 
 * What makes this integration possible?                               :slide:
 - An extensible editor
-  - Extensible in a full programming language
-  - This allows the tool to become what you want
+  - Extensible in a full programming language (Emacs-lisp)
+  - This allows the tool to become what you want and what you need
   - Emacs is ideal for this
 
 - A lightweight markup language
@@ -234,73 +293,15 @@ return [x for x in data if x[1] == 'anatase']
   - Org-mode is also ideal for this
     - Part structured markup, part api
     - Very good compromise on function and utility with authoring ease
+    - functional text
 
 - </code>
   Since we use code to generate and analyse data, this solution works especially well
 
-* Concluding thoughts                                                 :slide:
-
-- Emacs + org-mode + </code> enables a lot of very exciting capabilities in publishing and data sharing
-
-  - Integrated narrative text, data, code
-
-  - Export to a broad range of other formats
-
-  - Interaction with the world (other computers, instruments) via APIs
-
-    - Materials Project, translation, Internet of Things, ...
-
-- The future is very exciting
-
-- We are not waiting for someone to figure out what we want
-
-  - Anyway, by the time they deliver it we will need something else ;)
-
-* Extract the references                                              :slide:
-#+BEGIN_SRC emacs-lisp
-(save-window-excursion
- (save-restriction
- (widen)
- (org-ref-bibliography)
- (buffer-string)))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-  1. cite:kitchin-2015-examp Kitchin, John R., "Examples of Effective Data Sharing in Scientific Publishing", ACS Catalysis, 5:3894-3899 (2015)
-
-  2. cite:hallenbeck-2013-effec-o2 Hallenbeck, Alexander P. and Kitchin, John R., "Effects of \ce{O_2} and \ce{SO_2} on the Capture Capacity of a  Primary-Amine Based Polymeric \ce{CO_2} Sorbent", Industrial \& Engineering Chemistry Research, 52:10788-10794 (2013)
-
-  3. cite:miller-2014-simul-temper Spencer D. Miller and Vladimir V. Pushkarev and Andrew  J. Gellman and John R. Kitchin, "Simulating Temperature Programmed Desorption of Oxygen on  {P}t(111) Using {DFT} Derived Coverage Dependent Desorption  Barriers", Topics in Catalysis, 57:106-117 (2014)
-
-  4. cite:xu-2014-relat Zhongnan Xu and John R. Kitchin, "Relating the Electronic Structure and Reactivity of the 3d  Transition Metal Monoxide Surfaces", Catalysis Communications, 52:60-64 (2014)
-
-  5. cite:xu-2014-probin-cover Zhongnan Xu and John R. Kitchin, "Probing the Coverage Dependence of Site and Adsorbate  Configurational Correlations on (111) Surfaces of Late  Transition Metals", J. Phys. Chem. C, 118:25597-25602 (2014)
-
-  6. cite:curnan-2014-effec-concen Curnan, Matthew T. and Kitchin, John R., "Effects of Concentration, Crystal Structure, Magnetism, and  Electronic Structure Method on First-Principles Oxygen Vacancy  Formation Energy Trends in Perovskites", The Journal of Physical Chemistry C, 118:28776-28790 (2014)
-
-  7. cite:boes-2015-estim-bulk Jacob R. Boes and Gamze Gumuslu and James B. Miller and Andrew  J. Gellman and John R. Kitchin, "Estimating Bulk-Composition-Dependent \ce{H2} Adsorption  Energies on \ce{Cu_{x}Pd_{1-x}} Alloy (111) Surfaces", ACS Catalysis, 5:1020-1026 (2015)
-
-  8. cite:boes-2015-core-cu Jacob R. Boes and Peter Kondratyuk and Chunrong Yin and James  B. Miller and Andrew J. Gellman and John R. Kitchin, "Core Level Shifts in {Cu-Pd} Alloys As a Function of Bulk  Composition and Structure", Surface Science, 640:127-132 (2015)
-
-  9. cite:xu-2015-linear-respon Xu, Zhongnan and Rossmeisl, Jan and Kitchin, John R., "A Linear Response {DFT}+{U} Study of Trends in the Oxygen  Evolution Activity of Transition Metal Rutile Dioxides", The Journal of Physical Chemistry C, 119:4827-4833 (2015)
-
- 10. cite:xu-2015-accur-u Xu, Zhongnan and Joshi, Yogesh V. and Raman, Sumathy and  Kitchin, John R., "Accurate Electronic and Chemical Properties of 3d Transition  Metal Oxides Using a Calculated Linear Response {U} and a {DFT  + U(V)} Method", The Journal of Chemical Physics, 142:144701 (2015)
-
- 11. cite:kitchin-2015-data-surfac-scien John R. Kitchin, "Data Sharing in Surface Science", Surface Science , N/A:in press (2015)
-
- 12. cite:boes-2016-neural-networ Jacob R. Boes and Mitchell C. Groenenboom and John A. Keith  and John R. Kitchin, "Neural Network and Reaxff Comparison for {Au} Properties", Accepted 1/2016, Int. J. Quantum Chemistry, : (2016)
-
- 13. cite:mehta-2015-ident-poten Prateek Mehta and Paul A. Salvador and John R. Kitchin, "Identifying Potential \ce{BO2} Oxide Polymorphs for Epitaxial  Growth Candidates", ACS Appl. Mater. Interfaces, 6:3630-3639 (2015)
-
- 14. cite:pakin-attachfile Scott Pakin, "attachfile", , : ()
-#+end_example
-
-
 
 
 * Getting started                                                     :slide:
-Source code:  http://github.com/jkitchin/jmax
+Source code:  http://github.com/jkitchin/scimax
 
 Our starter-kit for Emacs + org-mode configured to do the things I showed you today
 Should work out of the box on Windows. Directions for using it on Mac/Linux.
@@ -311,226 +312,61 @@ Kitchingroup blog: http://kitchingroup.cheme.cmu.edu
 
 Check out our YouTube channel: https://www.youtube.com/user/jrkitchin
 
-[[./org-ref.png]] 1333 views  (1800+ downloads of org-ref on MELPA!)
 
 
-[[./awesome.png]] 20,984 views
+#+attr_org: :width 600
+[[./screenshots/date-16-11-2016-time-17-13-12.png]]
 
-[[./scipy-2013.png]] 23,094 views!
+ views  (7000+ downloads of org-ref on MELPA!)
 
-This talk: https://github.com/jkitchin/ACS-2016-data-sharing
+
+
+
+#+attr_org: :width 600
+[[./screenshots/date-16-11-2016-time-17-13-49.png]]
+
+
+
+
+#+attr_org: :width 600
+[[./screenshots/date-16-11-2016-time-17-14-24.png]]
+
+
+
+This talk: https://github.com/jkitchin/aiche-2016
+
+
+
+
+* Concluding thoughts                                                 :slide:
+
+- Emacs + org-mode + </code> enables a lot of very exciting capabilities in publishing and data/code sharing
+
+  - Integrated and reusable narrative text, data, code
+
+  - Export to a broad range of other formats
+
+  - Interaction with the world (other computers, instruments) via APIs
+
+    - Materials Project, translation to other languages, Internet of Things, ...
+
+- This is a great tool for teaching, technical writing, electronic notebook, and many other things
+
+- There is still work to do, but this has worked for us for many years now and we continue developing it
+
+- [[elisp:(words-speak "Hello. My name is Lexy. When I can discover data and code in papers, I can learn from them. Then, we can work together to do exciting new things!")][Message from Lexy]]
+
+- The future for molecular simulation and computational research is bright!
+
+            
+            Questions?
 
 * Appendix
-  :PROPERTIES:
-  :ID:       9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E
-  :END:
-** The custom export code \label{export-code}
-Here we define a custom table exporter. We use the regular table export mechanism, but save the contents of the table as a csv file. We define exports for two backends: LaTeX and HTML. For LaTeX, we use the attachfile cite:pakin-attachfile package to embed the data file in the PDF. For HTML, we insert a link to the data file, and a data uri link to the HTML output. We store the filename of each generated table in a global variable named =*embedded-files*= so we can create a new Info metadata entry in the exported PDF.
-
-#+name: table-format
-#+BEGIN_SRC emacs-lisp :results silent :tangle data-sharing.el
-(defvar *embedded-files* '()
-  "List of files embedded in the output.")
-
-(defun my-table-format (table contents info)
-  (let* ((tblstart (org-element-property
-		    :contents-begin table))
-	 (tbl-data (save-excursion
-		     (goto-char tblstart)
-		     (org-babel-del-hlines
-		      (org-babel-read-table))))
-         (tblname (or (org-element-property :name table) (md5 (format "%s" tbl-data))))
-	 (format (elt (plist-get info :back-end) 2))
-	 (csv-file (concat tblname ".csv"))
-	 (data-uri-data))
-
-    ;; Here we convert the table data to a csv file
-    (with-temp-file csv-file
-      (loop for row in tbl-data
-	    do
-	    (insert
-	     (mapconcat
-	      (lambda (x) (format "\"%s\"" x))
-	      row
-	      ", " ))
-	    (insert "\n"))
-      (setq data-uri-data
-	    (base64-encode-string
-	     (buffer-string))))
-
-    (add-to-list '*embedded-files* csv-file)
-
-    (cond
-     ;; HTML export
-     ((eq format 'html)
-      (concat
-       (org-html-table table contents info)
-       (format "<a href=\"%s\">%s</a>"
-	       csv-file csv-file)
-       " "
-       (format (concat  "<a href=\"data:text/csv;"
-                        "charset=US-ASCII;"
-                        "base64,%s\">data uri</a>")
-	       data-uri-data)))
-     ;; LaTeX/PDF export
-     ((eq format 'latex)
-      (concat
-       (org-latex-table table contents info)
-       "\n"
-       (format "%s: \\attachfile{%s}"
-	       csv-file csv-file))))))
-#+END_SRC
-
-Next, we define an exporter for source blocks. We will write these to a file too, and put links to them in the exported files. We store the filename of each generated source file in a global variable named =*embedded-files*= so we can create a new Info metadata entry in the exported PDF.
-
-#+name: src-block-format
-#+BEGIN_SRC emacs-lisp :results silent :tangle data-sharing.el
-(defun my-src-block-format (src-block contents info)
-  "Custom export for src-blocks.
-Saves code in block for embedding. Provides backend-specific
-output."
-  (let* ((srcname (org-element-property :name src-block))
-	 (lang (org-element-property :language src-block))
-	 (value (org-element-property :value src-block))
-         (format (elt (plist-get info :back-end) 2))
-	 (exts '(("python" . ".py")
-		 ("emacs-lisp" . ".elisp")
-		 ("C" . ".c")
-		 ("R" . ".R")))
-	 (fname (concat
-		 (or srcname (md5 value))
-		 (cdr (assoc lang exts))))
-	 (data-uri-data))
-
-    (with-temp-file fname
-      (insert value)
-      (setq data-uri-data (base64-encode-string
-			   (buffer-string))))
-
-    (add-to-list '*embedded-files* fname)
-
-    (cond
-     ;; HTML export
-     ((eq format 'html)
-      (concat
-       (org-html-src-block src-block contents info)
-       (format "<a href=\"%s\">%s</a>" fname fname)
-       " "
-       (format (concat "<a href=\"data:text/%s;"
-                       "charset=US-ASCII;base64,"
-                       "%s\">code uri</a>")
-	       lang data-uri-data)))
-     ;; LaTeX/PDF export
-     ((eq format 'latex)
-      (concat
-       (org-latex-src-block src-block contents info)
-       "\n"
-       (format "%s: \\attachfile{%s}" fname fname))))))
-#+END_SRC
-
-Finally, we also modify the results of a code block so they will appear in a gray box and stand out from the text more clearly.
-
-#+BEGIN_SRC emacs-lisp :tangle data-sharing.el
-(defun my-results (fixed-width contents info)
-  "Transform a results block to make it more visible."
-  (let ((results (org-element-property :results fixed-width))
-	(format (elt (plist-get info :back-end) 2))
-	(value (org-element-property :value fixed-width)))
-    (cond
-     ((eq 'latex format)
-      (format "\\begin{tcolorbox}
-\\begin{verbatim}
-RESULTS: %s
-\\end{verbatim}
-\\end{tcolorbox}"
-	      value))
-     (t
-      (format "<pre>RESULTS: %s</pre>" value)))))
-#+END_SRC
-
-#+RESULTS:
-: my-results
 
 
-An author may also choose to embed a file into their document, using the attachfile package for LaTeX. Here, we leverage the ability of org-mode to create functional links that can be exported differently for LaTeX and HTML. We will create an attachfile link, and set it up to export as a LaTeX command or as a data URI for HTML.
 
-#+name: attachfile-link
-#+BEGIN_SRC emacs-lisp :results none :tangle data-sharing.el
-(org-add-link-type
- "attachfile"
- (lambda (path) (org-open-file path))
- ;; formatting
- (lambda (path desc format)
-   (cond
-    ((eq format 'html)
-     ;; we want a data URI to the file name
-     (let* ((content
-	     (with-temp-buffer
-	       (insert-file-contents path)
-	       (buffer-string)))
-	    (data-uri
-	     (base64-encode-string
-	      (encode-coding-string content 'utf-8))))
-       (add-to-list '*embedded-files* path)
-       (format (concat "<a href=\"data:;base64,"
-                       "%s\">%s</a>")
-	       data-uri
-	       path)))
-    ((eq format 'latex)
-     ;; write out the latex command
-     (add-to-list '*embedded-files* path)
-     (format "\\attachfile{%s}" path)))))
-#+END_SRC
-
-Here, we define a derived backend for HTML and LaTeX export. These are identical to the standard export backends, except for the modified behavior of the table and src-block elements.
-
-#+BEGIN_SRC emacs-lisp :results none :tangle data-sharing.el
-(org-export-define-derived-backend 'my-html 'html
-  :translate-alist '((table . my-table-format)
-		     (src-block . my-src-block-format)
-		     (fixed-width . my-results)))
-
-(org-export-define-derived-backend 'my-latex 'latex
-  :translate-alist '((table . my-table-format)
-                     (src-block . my-src-block-format)
-		     (fixed-width . my-results)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :tangle data-sharing.el
-(defun custom-export-and-open-html ()
-  "Use my-html custom exporter and open the file."
-  (let* ((base (file-name-nondirectory
-		(file-name-sans-extension (buffer-file-name))))
-	 (html (concat base ".html")))
-    (save-restriction (widen)
-		      (browse-url (org-export-to-file 'my-html html)))))
-
-(defun custom-export-and-open-pdf ()
-  "Use my-latex custom exporter and open pdf."
-  (save-restriction
-    (widen)
-    (let* ((org-latex-image-default-width "")
-	   (*embedded-files* '())
-	   (base (file-name-nondirectory
-		  (file-name-sans-extension (buffer-file-name))))
-	   (tex (concat base ".tex"))
-	   (pdf (concat base ".pdf"))
-	   (org-latex-minted-options
-	    (append
-	     org-latex-minted-options
-	     '(("xleftmargin" "\\parindent")))))
-      (org-export-to-file 'my-latex tex)
-      (ox-manuscript-latex-pdf-process tex)
-      (org-open-file pdf))))
-#+END_SRC
-
-
-bibliographystyle:unsrtnat
-
-bibliography:~/Dropbox/bibliography/references.bib
-
-
+#  ov-highlight-data: ((11927%2011927%20(face%20(:slant%20italic)%20ov-highlight%20t))%20(11927%2011927%20(face%20(:weight%20bold)%20ov-highlight%20t))%20(11901%2011911%20(ov-highlight%20t%20face%20(:height%20405)))%20(11867%2011873%20(ov-highlight%20t%20face%20(:foreground%20"DarkOrange1")))%20(935%20958%20(ov-highlight%20t%20face%20(:foreground%20"DodgerBlue3")))%20(935%20958%20(ov-highlight%20t%20face%20(:weight%20bold)))%20(4041%204045%20(ov-highlight%20t%20face%20(:weight%20bold)))%20(4047%204053%20(ov-highlight%20t%20face%20(:slant%20italic)))%20(4055%204062%20(face%20(:background%20"Pink")%20ov-highlight%20t))%20(4063%204067%20(face%20(:foreground%20"IndianRed3")%20ov-highlight%20t))%20(4069%204072%20(face%20(:height%20306)%20ov-highlight%20t))%20(4077%204083%20(face%20(:height%2097)%20ov-highlight%20t))%20(4084%204089%20(face%20(:underline%20t)%20ov-highlight%20t))%20(4091%204101%20(face%20(:family%20"Comic%20Sans%20MS"%20:strike-through%20t%20:height%20306)%20ov-highlight%20t))%20(4103%204108%20(face%20(:background%20"Orange1")%20mouse-face%20highlight%20local-map%20(keymap%20(mouse-1%20lambda%20nil%20(interactive)%20(setq%20*ov-window-configuration*%20(current-window-configuration))%20(let%20((cb%20(current-buffer))%20(current-note%20(overlay-get%20(ov-at)%20(quote%20help-echo))))%20(switch-to-buffer%20"*ov-note*")%20(erase-buffer)%20(org-mode)%20(insert%20(or%20current-note%20""))%20(let%20((map%20(make-sparse-keymap)))%20(setq%20header-line-format%20"Click%20here%20or%20type%20s-<return>%20to%20finish.%20C-x%20k%20to%20cancel."))%20(local-set-key%20(kbd%20"C-x%20k")%20(\`%20(lambda%20nil%20(interactive)%20(kill-buffer))))%20(local-set-key%20(kbd%20"s-<return>")%20(\`%20(lambda%20nil%20(interactive)%20(let%20((tooltip%20(buffer-substring-no-properties%20(point-min)%20(point-max))))%20(kill-buffer)%20(set-window-configuration%20*ov-window-configuration*)%20(setq%20*ov-window-configuration*%20nil)%20(overlay-put%20(ov-at)%20(quote%20help-echo)%20tooltip))))))))%20help-echo%20"Do%20not%20use%20Comic%20Sans!"%20ov-highlight%20t))%20(4590%204590%20(face%20(:background%20"Orange1")%20mouse-face%20highlight%20local-map%20(keymap%20(mouse-1%20lambda%20nil%20(interactive)%20(setq%20*ov-window-configuration*%20(current-window-configuration))%20(let%20((cb%20(current-buffer))%20(current-note%20(overlay-get%20(ov-at)%20(quote%20help-echo))))%20(switch-to-buffer%20"*ov-note*")%20(erase-buffer)%20(org-mode)%20(insert%20(or%20current-note%20""))%20(let%20((map%20(make-sparse-keymap)))%20(setq%20header-line-format%20"Click%20here%20or%20type%20s-<return>%20to%20finish.%20C-x%20k%20to%20cancel."))%20(local-set-key%20(kbd%20"C-x%20k")%20(\`%20(lambda%20nil%20(interactive)%20(kill-buffer))))%20(local-set-key%20(kbd%20"s-<return>")%20(\`%20(lambda%20nil%20(interactive)%20(let%20((tooltip%20(buffer-substring-no-properties%20(point-min)%20(point-max))))%20(kill-buffer)%20(set-window-configuration%20*ov-window-configuration*)%20(setq%20*ov-window-configuration*%20nil)%20(overlay-put%20(ov-at)%20(quote%20help-echo)%20tooltip))))))))%20help-echo%20(lambda%20nil%20(interactive)%20(let%20((tooltip%20(buffer-substring-no-properties%20(point-min)%20(point-max))))%20(kill-buffer)%20(set-window-configuration%20*ov-window-configuration*)%20(setq%20*ov-window-configuration*%20nil)%20(overlay-put%20(ov-at)%20(quote%20help-echo)%20tooltip)))%20ov-highlight%20t))%20(5675%205687%20(ov-highlight%20t%20face%20(:box%20(:line-width%202%20:color%20"red"%20:style%20released-button))))%20(5728%205738%20(ov-highlight%20t%20face%20(:box%20(:line-width%202%20:color%20"red"%20:style%20released-button))))%20(5969%205972%20(ov-highlight%20t%20face%20(:box%20(:line-width%202%20:color%20"red"%20:style%20released-button))))%20(6041%206044%20(ov-highlight%20t%20face%20(:box%20(:line-width%202%20:color%20"red"%20:style%20released-button)))))
 
 # Local Variables:
-# org-image-actual-width: t
+# eval: (ov-highlight-load)
 # End:

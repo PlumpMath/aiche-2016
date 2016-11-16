@@ -3,23 +3,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Authoring tools to automate data sharing in scientific publishing</title>
-<!-- 2016-03-14 Mon 18:23 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
-<meta  name="author" content="John Kitchin" />
+<!-- 2016-11-12 Sat 20:22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Expanding Molecular Simulation Use by Data/Code Sharing in Scientific Publishing</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="John Kitchin" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -46,27 +53,110 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -86,6 +176,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <script type="text/javascript">
@@ -134,1083 +225,129 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
+<script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "2em",
+        displayIndent: "0em",
 
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
              }
-        }
-    });
-/*]]>*///-->
+});
 </script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Authoring tools to automate data sharing in scientific publishing</h1>
-<p>
-\maketitle
-\tableofcontents
-</p>
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Title slide</h2>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Introduction</h2>
-<div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li>Data sharing is not easy
-</li>
-
-<li>But it is increasingly required
-</li>
-
-<li>And increasingly desired
-
-<p>
-The big question is: "How do we make that happen?"
-</p>
-</li>
-
-<li>Nobody wants more work
-</li>
-
-<li>We would all like to get more out of what we already do
-</li>
-
-<li>We are working on tools that make that happen that I will talk about today
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Why is data sharing hard today?</h2>
-<div class="outline-text-2" id="text-3">
-<ul class="org-ul">
-<li>For many scientific authors data and analysis are not integrated into writing tools
-
-<ul class="org-ul">
-<li>Think about a manuscript in MS Word/LaTeX
-</li>
-<li>Data in Excel, data files,&#x2026;
-</li>
-<li>Plots in Origin/SigmaPlot/etc.
-</li>
-<li>Separate script files for analysis
-</li>
-<li>all with limited interconnectivity
-
-<ul class="org-ul">
-<li>e.g. where is the data in Fig 2 of the manuscript?
-</li>
-<li>Where is the file/script that did the data analysis?
-</li>
-<li>How do I reuse the data in Table 2 for a new purpose? Copy and Paste?
-</li>
-</ul>
-</li>
-</ul>
-</li>
-
-<li>These tools are not especially well-integrated and not easily adapted to new use cases
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Sharing is tedious, error prone</h2>
-<div class="outline-text-2" id="text-4">
-<ul class="org-ul">
-<li>Sharing then becomes extra work to generate supporting information that reconstructs the effort, copies data you think you used, etc.
-</li>
-
-<li>Reconstruction of the work that went into the manuscript is error prone
-</li>
-
-<li>and tedious&#x2026;
-</li>
-
-<li>Reuse is not much better
-</li>
-
-<li>Yet increasingly required, and desired
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Our approach to this issue is integration of tools/data</h2>
-<div class="outline-text-2" id="text-5">
-<ul class="org-ul">
-<li>We developed an integrated set of tools that makes data/code/analysis part of the manuscript preparation/submission process could help with data sharing
-</li>
-
-<li>It would leverage the work we already do in scientific writing
-</li>
-
-<li>and provide access to reusable data/code
-</li>
-
-<li>This does require development of a relatively new tool chain for writing
-</li>
-
-<li>We have done this in Emacs + org-mode + code
-</li>
-
-<li>It is all open-source (<a href="http://github.com/jkitchin/jmax">http://github.com/jkitchin/jmax</a>) and cross-platform
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Emacs + org-mode for reproducible, functional scientific documents</h2>
-<div class="outline-text-2" id="text-6">
-<ul class="org-ul">
-<li>org-mode is basically a plain text markup language deeply integrated into Emacs (an editor)
-</li>
-
-<li>Outline mode at the core, and much much more
-</li>
-</ul>
-</div>
-
-<div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> sub-heading</h3>
-<div class="outline-text-3" id="text-6-1">
-<ul class="org-ul">
-<li>Narrative text, equations \(\int_0^1 e^x dx\), images  <img src="./scientist.png" alt="scientist.png" />
-</li>
-</ul>
-</div>
-
-<div id="outline-container-sec-6-1-1" class="outline-4">
-<h4 id="sec-6-1-1"><span class="section-number-4">6.1.1</span> sub-sub-heading</h4>
-<div class="outline-text-4" id="text-6-1-1">
-<p>
-Functional tables
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="right" />
-
-<col  class="right" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="right">a</th>
-<th scope="col" class="right">b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="right">2</td>
-<td class="right">4</td>
-</tr>
-
-<tr>
-<td class="right">0</td>
-<td class="right">1</td>
-</tr>
-</tbody>
-</table><a href="3b2a6830d248f31580202ccdbadd5c49.csv">3b2a6830d248f31580202ccdbadd5c49.csv</a> <a href="data:text/csv;charset=US-ASCII;base64,ImEiLCAiYiIKIjIiLCAiNCIKIjAiLCAiMSIK">data uri</a>
-
-<ul class="org-ul">
-<li>citations <a class='org-ref-reference' href="#kitchin-2015-examp">kitchin-2015-examp</a>
-</li>
-
-<li>Integrated functional code
-</li>
-</ul>
-<div class="org-src-container">
-
-<pre class="src src-sh">date
-</pre>
-</div><a href="a9564ebc3289b7a14551baf8ad5ec60a">a9564ebc3289b7a14551baf8ad5ec60a</a> <a href="data:text/sh;charset=US-ASCII;base64,ZGF0ZQo=">code uri</a>
-
-<pre>RESULTS: Mon Mar 14 13:11:05 PDT 2016
-</pre>
-
-<ul class="org-ul">
-<li>Functional links that can
-<ul class="org-ul">
-<li>Open document locations  <img src="scientist.png" alt="scientist.png" />
-</li>
-<li>Open mail, news, urls
-</li>
-<li>run user-defined code in almost any language
-</li>
-</ul>
-</li>
-</ul>
-
-<div class="org-src-container">
-
-<pre class="src src-python"><span style="color: #0000FF;">import</span> time
-<span style="color: #0000FF;">print</span>(time.asctime())
-</pre>
-</div><a href="309ec9e61913846c23962de976f11728.py">309ec9e61913846c23962de976f11728.py</a> <a href="data:text/python;charset=US-ASCII;base64,aW1wb3J0IHRpbWUKcHJpbnQodGltZS5hc2N0aW1lKCkpCg==">code uri</a>
-
-<pre>RESULTS: Mon Mar 14 13:11:36 2016
-</pre>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(current-time-string)
-</pre>
-</div><a href="7f7bac1b1e471114e487e90437582fbd.elisp">7f7bac1b1e471114e487e90437582fbd.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGN1cnJlbnQtdGltZS1zdHJpbmcpCg==">code uri</a>
-
-<pre>RESULTS: Mon Mar 14 13:11:45 2016
-</pre>
-
-<div class="org-src-container">
-
-<pre class="src src-R">Sys.time()
-</pre>
-</div><a href="3f06a7efae851f9690a285a46ca320dc.R">3f06a7efae851f9690a285a46ca320dc.R</a> <a href="data:text/R;charset=US-ASCII;base64,U3lzLnRpbWUoKQo=">code uri</a>
-
-<pre>RESULTS: [1] "2016-03-14 13:11:51 PDT"
-</pre>
-
-<div class="org-src-container">
-
-<pre class="src src-C"><span style="color: #808080;">#include</span> <span style="color: #008000;">&lt;time.h&gt;</span>
-<span style="color: #808080;">#include</span> <span style="color: #008000;">&lt;stdlib.h&gt;</span>
-<span style="color: #808080;">#include</span> <span style="color: #008000;">&lt;stdio.h&gt;</span>
-
-<span style="color: #6434A3;">int</span> <span style="color: #006699;">main</span>() {
-    <span style="color: #6434A3;">time_t</span> <span style="color: #BA36A5;">current_time</span>;
-    <span style="color: #6434A3;">char</span>* <span style="color: #BA36A5;">c_time_string</span>;
-    current_time = time(<span style="color: #D0372D;">NULL</span>);
-    <span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">Convert to local time format. </span><span style="color: #8D8D84;">*/</span>
-    c_time_string = ctime(&amp;current_time);
-    printf(<span style="color: #008000;">"%s"</span>, c_time_string);
-    <span style="color: #0000FF;">return</span> 0;
-}
-</pre>
-</div><a href="812a422b1846832bae23932b69c07e4c.c">812a422b1846832bae23932b69c07e4c.c</a> <a href="data:text/C;charset=US-ASCII;base64,I2luY2x1ZGUgPHRpbWUuaD4KI2luY2x1ZGUgPHN0ZGxpYi5oPgojaW5jbHVkZSA8c3RkaW8uaD4K
-CmludCBtYWluKCkgewogICAgdGltZV90IGN1cnJlbnRfdGltZTsKICAgIGNoYXIqIGNfdGltZV9z
-dHJpbmc7CiAgICBjdXJyZW50X3RpbWUgPSB0aW1lKE5VTEwpOwogICAgLyogQ29udmVydCB0byBs
-b2NhbCB0aW1lIGZvcm1hdC4gKi8KICAgIGNfdGltZV9zdHJpbmcgPSBjdGltZSgmY3VycmVudF90
-aW1lKTsKICAgIHByaW50ZigiJXMiLCBjX3RpbWVfc3RyaW5nKTsKICAgIHJldHVybiAwOwp9Cg==">code uri</a>
-<pre>RESULTS: Mon Mar 14 13:11:56 2016
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> We have used it extensively in scientific publishing</h2>
-<div class="outline-text-2" id="text-7">
-<ul class="org-ul">
-<li>Over dozen papers in print by my group illustrating what can be done
-</li>
-
-<li><a class='org-ref-reference' href="#hallenbeck-2013-effec-o2">hallenbeck-2013-effec-o2</a> - all experimental
-</li>
-<li><a class='org-ref-reference' href="#miller-2014-simul-temper">miller-2014-simul-temper</a> - mixed experiment/computation
-</li>
-<li><a class='org-ref-reference' href="#xu-2014-relat">xu-2014-relat</a> - computational DFT on oxides
-</li>
-<li><a class='org-ref-reference' href="#xu-2014-probin-cover">xu-2014-probin-cover</a> - computational coverage/site dependence
-</li>
-<li><a class='org-ref-reference' href="#curnan-2014-effec-concen">curnan-2014-effec-concen</a> - full sql database described in SI
-</li>
-<li><a class='org-ref-reference' href="#boes-2015-estim-bulk">boes-2015-estim-bulk</a> - exp/computation H2/D2 exchange on CuPd
-</li>
-<li><a class='org-ref-reference' href="#boes-2015-core-cu">boes-2015-core-cu</a> - exp/computation XPS on CuPd alloys
-</li>
-<li><a class='org-ref-reference' href="#xu-2015-linear-respon">xu-2015-linear-respon</a> - 1.8 GB dataset on Zenodo
-</li>
-<li><a class='org-ref-reference' href="#xu-2015-accur-u">xu-2015-accur-u</a> - computation DFT+U
-</li>
-<li><a class='org-ref-reference' href="#kitchin-2015-data-surfac-scien">kitchin-2015-data-surfac-scien</a> - examples of reusing data
-</li>
-<li><a class='org-ref-reference' href="#kitchin-2015-examp">kitchin-2015-examp</a> - examples of reusing data
-</li>
-<li><a class='org-ref-reference' href="#boes-2016-neural-networ">boes-2016-neural-networ</a> - Molecular simulation
-</li>
-</ul>
-
-<p>
-Let's see a working example
-</p>
-<ul class="org-ul">
-<li><a class='org-ref-reference' href="#mehta-2015-ident-poten">mehta-2015-ident-poten</a> The data is available in the SI
-</li>
-
-<li>The json database described in SI
-</li>
-</ul>
-<ul class="org-ul">
-<li>The source can be extracted from the PDF (goto line 336)
-</li>
-</ul>
-<div class="org-src-container">
-
-<pre class="src src-sh">pdftk am4059149_si_001.pdf  unpack_files
-</pre>
-</div><a href="3a4c9126c7b0a1737bd6a65d910ca25a">3a4c9126c7b0a1737bd6a65d910ca25a</a> <a href="data:text/sh;charset=US-ASCII;base64,cGRmdGsgYW00MDU5MTQ5X3NpXzAwMS5wZGYgIHVucGFja19maWxlcwo=">code uri</a>
-
-<p>
-That SI file was generated here (goto line 336):
-<a href="supporting-information.html">supporting-information.html</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Reusing the data</h2>
-<div class="outline-text-2" id="text-8">
+<h1 class="title">Expanding Molecular Simulation Use by Data/Code Sharing in Scientific Publishing</h1>
+<div id="outline-container-org3e0681b" class="outline-2">
+<h2 id="org3e0681b"><span class="section-number-2">1</span> Reusing the data</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 That data is human readable - and machine addressable
 </p>
 
+<p>
+We can extract and reuse the data from the original document.
+</p>
+
 <div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(remove-if-not (<span style="color: #0000FF;">lambda</span> (x) (string= <span style="color: #008000;">"rutile"</span> (nth 1 x))) data)
+<pre class="src src-emacs-lisp">(remove-if-not (<span style="color: #0000FF;">lambda</span> (x) (string= <span style="color: #008000;">"LDA"</span> (nth 2 x))) data)
 </pre>
-</div><a href="1f85d0194e997e7ea8f170bf787a8598.elisp">1f85d0194e997e7ea8f170bf787a8598.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KHJlbW92ZS1pZi1ub3QgKGxhbWJkYSAoeCkgKHN0cmluZz0gInJ1dGlsZSIgKG50aCAxIHgpKSkg
-ZGF0YSkK">code uri</a>
+</div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="left" />
-
-<col  class="left" />
-
-<col  class="left" />
-
-<col  class="right" />
-
-<col  class="right" />
-
-<col  class="right" />
-</colgroup>
-<tbody>
-<tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">rutile</td>
-<td class="left">LDA</td>
-<td class="right">-2801.64</td>
-<td class="right">30.58</td>
-<td class="right">259.47</td>
-</tr>
-
-<tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">rutile</td>
-<td class="left">AM05</td>
-<td class="right">-2733.53</td>
-<td class="right">31.31</td>
-<td class="right">233.2</td>
-</tr>
-
-<tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">rutile</td>
-<td class="left">PBEsol</td>
-<td class="right">-2759.29</td>
-<td class="right">31.22</td>
-<td class="right">239.76</td>
-</tr>
-
-<tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">rutile</td>
-<td class="left">PBE</td>
-<td class="right">-2773.21</td>
-<td class="right">32.11</td>
-<td class="right">215.78</td>
-</tr>
-</tbody>
-</table><a href="089d3777c582b5e548c243b5c9fa5229.csv">089d3777c582b5e548c243b5c9fa5229.csv</a> <a href="data:text/csv;charset=US-ASCII;base64,IlRpTyRfMiQiLCAicnV0aWxlIiwgIkxEQSIsICItMjgwMS42NCIsICIzMC41OCIsICIyNTkuNDci
-CiJUaU8kXzIkIiwgInJ1dGlsZSIsICJBTTA1IiwgIi0yNzMzLjUzIiwgIjMxLjMxIiwgIjIzMy4y
-IgoiVGlPJF8yJCIsICJydXRpbGUiLCAiUEJFc29sIiwgIi0yNzU5LjI5IiwgIjMxLjIyIiwgIjIz
-OS43NiIKIlRpTyRfMiQiLCAicnV0aWxlIiwgIlBCRSIsICItMjc3My4yMSIsICIzMi4xMSIsICIy
-MTUuNzgiCg==">data uri</a>
 
 <p>
 If you prefer Python, no problem. Here we get the anatase data:
 </p>
 
 <div class="org-src-container">
-
 <pre class="src src-python"><span style="color: #0000FF;">return</span> [x <span style="color: #0000FF;">for</span> x <span style="color: #0000FF;">in</span> data <span style="color: #0000FF;">if</span> x[1] == <span style="color: #008000;">'anatase'</span>]
 </pre>
-</div><a href="32c09a6e325db19533e2e272caed35fd.py">32c09a6e325db19533e2e272caed35fd.py</a> <a href="data:text/python;charset=US-ASCII;base64,cmV0dXJuIFt4IGZvciB4IGluIGRhdGEgaWYgeFsxXSA9PSAnYW5hdGFzZSddCg==">code uri</a>
+</div>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="right" />
+<col  class="org-right" />
 
-<col  class="right" />
+<col  class="org-right" />
 
-<col  class="right" />
+<col  class="org-right" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">anatase</td>
-<td class="left">LDA</td>
-<td class="right">-2802.73</td>
-<td class="right">33.62</td>
-<td class="right">187.4</td>
+<td class="org-left">TiO\(_2\)</td>
+<td class="org-left">anatase</td>
+<td class="org-left">LDA</td>
+<td class="org-right">-2802.73</td>
+<td class="org-right">33.62</td>
+<td class="org-right">187.4</td>
 </tr>
 
 <tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">anatase</td>
-<td class="left">AM05</td>
-<td class="right">-2741.12</td>
-<td class="right">34.33</td>
-<td class="right">178.26</td>
+<td class="org-left">TiO\(_2\)</td>
+<td class="org-left">anatase</td>
+<td class="org-left">AM05</td>
+<td class="org-right">-2741.12</td>
+<td class="org-right">34.33</td>
+<td class="org-right">178.26</td>
 </tr>
 
 <tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">anatase</td>
-<td class="left">PBEsol</td>
-<td class="right">-2763.61</td>
-<td class="right">34.25</td>
-<td class="right">178.71</td>
+<td class="org-left">TiO\(_2\)</td>
+<td class="org-left">anatase</td>
+<td class="org-left">PBEsol</td>
+<td class="org-right">-2763.61</td>
+<td class="org-right">34.25</td>
+<td class="org-right">178.71</td>
 </tr>
 
 <tr>
-<td class="left">TiO\(_2\)</td>
-<td class="left">anatase</td>
-<td class="left">PBE</td>
-<td class="right">-2781.16</td>
-<td class="right">35.13</td>
-<td class="right">171.42</td>
+<td class="org-left">TiO\(_2\)</td>
+<td class="org-left">anatase</td>
+<td class="org-left">PBE</td>
+<td class="org-right">-2781.16</td>
+<td class="org-right">35.13</td>
+<td class="org-right">171.42</td>
 </tr>
 </tbody>
-</table><a href="6f02bbf48d7abde528dc614a9a7a84f1.csv">6f02bbf48d7abde528dc614a9a7a84f1.csv</a> <a href="data:text/csv;charset=US-ASCII;base64,IlRpTyRfMiQiLCAiYW5hdGFzZSIsICJMREEiLCAiLTI4MDIuNzMiLCAiMzMuNjIiLCAiMTg3LjQi
-CiJUaU8kXzIkIiwgImFuYXRhc2UiLCAiQU0wNSIsICItMjc0MS4xMiIsICIzNC4zMyIsICIxNzgu
-MjYiCiJUaU8kXzIkIiwgImFuYXRhc2UiLCAiUEJFc29sIiwgIi0yNzYzLjYxIiwgIjM0LjI1Iiwg
-IjE3OC43MSIKIlRpTyRfMiQiLCAiYW5hdGFzZSIsICJQQkUiLCAiLTI3ODEuMTYiLCAiMzUuMTMi
-LCAiMTcxLjQyIgo=">data uri</a>
-</div>
-</div>
-
-
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Automating data embedding sharing</h2>
-<div class="outline-text-2" id="text-9">
-<ul class="org-ul">
-<li>org-mode is great - If you use org-mode
-</li>
-<li>In an <a href="#sec-14">Appendix</a> there is code that automatically embeds data and code in org-mode into HTML and PDF.
-</li>
-<li>One source to many outputs
-</li>
-
-<li>We can extract the source code and load it here
-</li>
-</ul>
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(org-babel-tangle)
-(load-file <span style="color: #008000;">"data-sharing.el"</span>)
-</pre>
-</div><a href="feeccf7cb9ed36d8b57790a1ed1e6933.elisp">feeccf7cb9ed36d8b57790a1ed1e6933.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KG9yZy1iYWJlbC10YW5nbGUpCihsb2FkLWZpbGUgImRhdGEtc2hhcmluZy5lbCIpCg==">code uri</a>
-</div>
-
-<div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1"><span class="section-number-3">9.1</span> HTML export</h3>
-<div class="outline-text-3" id="text-9-1">
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(custom-export-and-open-html)
-</pre>
-</div><a href="94b98fc6d9a07d6041b0d18ad27acb59.elisp">94b98fc6d9a07d6041b0d18ad27acb59.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGN1c3RvbS1leHBvcnQtYW5kLW9wZW4taHRtbCkK">code uri</a>
-</div>
-</div>
-
-<div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2"><span class="section-number-3">9.2</span> PDF export</h3>
-<div class="outline-text-3" id="text-9-2">
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(custom-export-and-open-pdf)
-</pre>
-</div><a href="7ebdbc39a7bc97162b6a263e0e68f7f0.elisp">7ebdbc39a7bc97162b6a263e0e68f7f0.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGN1c3RvbS1leHBvcnQtYW5kLW9wZW4tcGRmKQo=">code uri</a>
-</div>
-</div>
-
-<div id="outline-container-sec-9-3" class="outline-3">
-<h3 id="sec-9-3"><span class="section-number-3">9.3</span> Vanilla export</h3>
-<div class="outline-text-3" id="text-9-3">
-<p>
-<a href="(org-open-file (org-latex-export-to-pdf))">(org-open-file (org-latex-export-to-pdf))</a>
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> What makes this integration possible?</h2>
-<div class="outline-text-2" id="text-10">
-<ul class="org-ul">
-<li>An extensible editor
-<ul class="org-ul">
-<li>Extensible in a full programming language
-</li>
-<li>This allows the tool to become what you want
-</li>
-<li>Emacs is ideal for this
-</li>
-</ul>
-</li>
-
-<li>A lightweight markup language
-<ul class="org-ul">
-<li>to differentiate text, code, data
-</li>
-<li>Org-mode is also ideal for this
-<ul class="org-ul">
-<li>Part structured markup, part api
-</li>
-<li>Very good compromise on function and utility with authoring ease
-</li>
-</ul>
-</li>
-</ul>
-</li>
-
-<li>&lt;/code&gt;
-Since we use code to generate and analyse data, this solution works especially well
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> Concluding thoughts</h2>
-<div class="outline-text-2" id="text-11">
-<ul class="org-ul">
-<li>Emacs + org-mode + &lt;/code&gt; enables a lot of very exciting capabilities in publishing and data sharing
-
-<ul class="org-ul">
-<li>Integrated narrative text, data, code
-</li>
-
-<li>Export to a broad range of other formats
-</li>
-
-<li>Interaction with the world (other computers, instruments) via APIs
-
-<ul class="org-ul">
-<li>Materials Project, translation, Internet of Things, &#x2026;
-</li>
-</ul>
-</li>
-</ul>
-</li>
-
-<li>The future is very exciting
-</li>
-
-<li>We are not waiting for someone to figure out what we want
-
-<ul class="org-ul">
-<li>Anyway, by the time they deliver it we will need something else ;)
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> Extract the references</h2>
-<div class="outline-text-2" id="text-12">
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">save-window-excursion</span>
- (<span style="color: #0000FF;">save-restriction</span>
- (widen)
- (org-ref-bibliography)
- (buffer-string)))
-</pre>
-</div><a href="4e0979a1b8eb6bf328e800e4164ab2c7.elisp">4e0979a1b8eb6bf328e800e4164ab2c7.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KHNhdmUtd2luZG93LWV4Y3Vyc2lvbgogKHNhdmUtcmVzdHJpY3Rpb24KICh3aWRlbikKIChvcmct
-cmVmLWJpYmxpb2dyYXBoeSkKIChidWZmZXItc3RyaW5nKSkpCg==">code uri</a>
-
-<pre class="example">
-  1. cite:kitchin-2015-examp Kitchin, John R., "Examples of Effective Data Sharing in Scientific Publishing", ACS Catalysis, 5:3894-3899 (2015)
-
-  2. cite:hallenbeck-2013-effec-o2 Hallenbeck, Alexander P. and Kitchin, John R., "Effects of \ce{O_2} and \ce{SO_2} on the Capture Capacity of a  Primary-Amine Based Polymeric \ce{CO_2} Sorbent", Industrial \&amp; Engineering Chemistry Research, 52:10788-10794 (2013)
-
-  3. cite:miller-2014-simul-temper Spencer D. Miller and Vladimir V. Pushkarev and Andrew  J. Gellman and John R. Kitchin, "Simulating Temperature Programmed Desorption of Oxygen on  {P}t(111) Using {DFT} Derived Coverage Dependent Desorption  Barriers", Topics in Catalysis, 57:106-117 (2014)
-
-  4. cite:xu-2014-relat Zhongnan Xu and John R. Kitchin, "Relating the Electronic Structure and Reactivity of the 3d  Transition Metal Monoxide Surfaces", Catalysis Communications, 52:60-64 (2014)
-
-  5. cite:xu-2014-probin-cover Zhongnan Xu and John R. Kitchin, "Probing the Coverage Dependence of Site and Adsorbate  Configurational Correlations on (111) Surfaces of Late  Transition Metals", J. Phys. Chem. C, 118:25597-25602 (2014)
-
-  6. cite:curnan-2014-effec-concen Curnan, Matthew T. and Kitchin, John R., "Effects of Concentration, Crystal Structure, Magnetism, and  Electronic Structure Method on First-Principles Oxygen Vacancy  Formation Energy Trends in Perovskites", The Journal of Physical Chemistry C, 118:28776-28790 (2014)
-
-  7. cite:boes-2015-estim-bulk Jacob R. Boes and Gamze Gumuslu and James B. Miller and Andrew  J. Gellman and John R. Kitchin, "Estimating Bulk-Composition-Dependent \ce{H2} Adsorption  Energies on \ce{Cu_{x}Pd_{1-x}} Alloy (111) Surfaces", ACS Catalysis, 5:1020-1026 (2015)
-
-  8. cite:boes-2015-core-cu Jacob R. Boes and Peter Kondratyuk and Chunrong Yin and James  B. Miller and Andrew J. Gellman and John R. Kitchin, "Core Level Shifts in {Cu-Pd} Alloys As a Function of Bulk  Composition and Structure", Surface Science, 640:127-132 (2015)
-
-  9. cite:xu-2015-linear-respon Xu, Zhongnan and Rossmeisl, Jan and Kitchin, John R., "A Linear Response {DFT}+{U} Study of Trends in the Oxygen  Evolution Activity of Transition Metal Rutile Dioxides", The Journal of Physical Chemistry C, 119:4827-4833 (2015)
-
- 10. cite:xu-2015-accur-u Xu, Zhongnan and Joshi, Yogesh V. and Raman, Sumathy and  Kitchin, John R., "Accurate Electronic and Chemical Properties of 3d Transition  Metal Oxides Using a Calculated Linear Response {U} and a {DFT  + U(V)} Method", The Journal of Chemical Physics, 142:144701 (2015)
-
- 11. cite:kitchin-2015-data-surfac-scien John R. Kitchin, "Data Sharing in Surface Science", Surface Science , N/A:in press (2015)
-
- 12. cite:boes-2016-neural-networ Jacob R. Boes and Mitchell C. Groenenboom and John A. Keith  and John R. Kitchin, "Neural Network and Reaxff Comparison for {Au} Properties", Accepted 1/2016, Int. J. Quantum Chemistry, : (2016)
-
- 13. cite:mehta-2015-ident-poten Prateek Mehta and Paul A. Salvador and John R. Kitchin, "Identifying Potential \ce{BO2} Oxide Polymorphs for Epitaxial  Growth Candidates", ACS Appl. Mater. Interfaces, 6:3630-3639 (2015)
-
- 14. cite:pakin-attachfile Scott Pakin, "attachfile", , : ()
-</pre>
-</div>
-</div>
-
-
-
-
-<div id="outline-container-sec-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> Getting started</h2>
-<div class="outline-text-2" id="text-13">
-<p>
-Source code:  <a href="http://github.com/jkitchin/jmax">http://github.com/jkitchin/jmax</a>
-</p>
+</table>
 
 <p>
-Our starter-kit for Emacs + org-mode configured to do the things I showed you today
-Should work out of the box on Windows. Directions for using it on Mac/Linux.
-</p>
-
-<p>
-Kitchingroup blog: <a href="http://kitchingroup.cheme.cmu.edu">http://kitchingroup.cheme.cmu.edu</a>
-</p>
-
-<p>
-@johnkitchin <img src="./tweet-org-ref.png" alt="tweet-org-ref.png" />
-</p>
-
-<p>
-Check out our YouTube channel: <a href="https://www.youtube.com/user/jrkitchin">https://www.youtube.com/user/jrkitchin</a>
-</p>
-
-<p>
-<img src="./org-ref.png" alt="org-ref.png" /> 1333 views  (1800+ downloads of org-ref on MELPA!)
+We can do analysis in our document, and control what gets exported!
 </p>
 
 
-<p>
-<img src="./awesome.png" alt="awesome.png" /> 20,984 views
+<div class="figure">
+<p><img src="eos.png" alt="eos.png" />
 </p>
-
-<p>
-<img src="./scipy-2013.png" alt="scipy-2013.png" /> 23,094 views!
-</p>
-
-<p>
-This talk: <a href="https://github.com/jkitchin/ACS-2016-data-sharing">https://github.com/jkitchin/ACS-2016-data-sharing</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-14" class="outline-2">
-<h2 id="sec-14"><a id="ID-9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E" name="ID-9EE6959B-D9BA-48FD-A1CD-807FB6FAD50E"></a><span class="section-number-2">14</span> Appendix</h2>
-<div class="outline-text-2" id="text-14">
-</div>
-<div id="outline-container-sec-14-1" class="outline-3">
-<h3 id="sec-14-1"><span class="section-number-3">14.1</span> The custom export code \label{export-code}</h3>
-<div class="outline-text-3" id="text-14-1">
-<p>
-Here we define a custom table exporter. We use the regular table export mechanism, but save the contents of the table as a csv file. We define exports for two backends: LaTeX and HTML. For LaTeX, we use the attachfile <a class='org-ref-reference' href="#pakin-attachfile">pakin-attachfile</a> package to embed the data file in the PDF. For HTML, we insert a link to the data file, and a data uri link to the HTML output. We store the filename of each generated table in a global variable named <code>*embedded-files*</code> so we can create a new Info metadata entry in the exported PDF.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp" id="table-format">(<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">*embedded-files*</span> '()
-  <span style="color: #036A07;">"List of files embedded in the output."</span>)
-
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">my-table-format</span> (table contents info)
-  (<span style="color: #0000FF;">let*</span> ((tblstart (org-element-property
-                    <span style="color: #006FE0;">:contents-begin</span> table))
-         (tbl-data (<span style="color: #0000FF;">save-excursion</span>
-                     (goto-char tblstart)
-                     (org-babel-del-hlines
-                      (org-babel-read-table))))
-         (tblname (<span style="color: #0000FF;">or</span> (org-element-property <span style="color: #006FE0;">:name</span> table) (md5 (format <span style="color: #008000;">"%s"</span> tbl-data))))
-         (format (elt (plist-get info <span style="color: #006FE0;">:back-end</span>) 2))
-         (csv-file (concat tblname <span style="color: #008000;">".csv"</span>))
-         (data-uri-data))
-
-    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Here we convert the table data to a csv file</span>
-    (<span style="color: #0000FF;">with-temp-file</span> csv-file
-      (<span style="color: #0000FF;">loop</span> for row in tbl-data
-            do
-            (insert
-             (mapconcat
-              (<span style="color: #0000FF;">lambda</span> (x) (format <span style="color: #008000;">"\"%s\""</span> x))
-              row
-              <span style="color: #008000;">", "</span> ))
-            (insert <span style="color: #008000;">"\n"</span>))
-      (<span style="color: #0000FF;">setq</span> data-uri-data
-            (base64-encode-string
-             (buffer-string))))
-
-    (add-to-list '*embedded-files* csv-file)
-
-    (<span style="color: #0000FF;">cond</span>
-     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">HTML export</span>
-     ((eq format 'html)
-      (concat
-       (org-html-table table contents info)
-       (format <span style="color: #008000;">"&lt;a href=\"%s\"&gt;%s&lt;/a&gt;"</span>
-               csv-file csv-file)
-       <span style="color: #008000;">" "</span>
-       (format (concat  <span style="color: #008000;">"&lt;a href=\"data:text/csv;"</span>
-                        <span style="color: #008000;">"charset=US-ASCII;"</span>
-                        <span style="color: #008000;">"base64,%s\"&gt;data uri&lt;/a&gt;"</span>)
-               data-uri-data)))
-     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">LaTeX/PDF export</span>
-     ((eq format 'latex)
-      (concat
-       (org-latex-table table contents info)
-       <span style="color: #008000;">"\n"</span>
-       (format <span style="color: #008000;">"%s: \\attachfile{%s}"</span>
-               csv-file csv-file))))))
-</pre>
-</div><a href="table-format.elisp">table-format.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGRlZnZhciAqZW1iZWRkZWQtZmlsZXMqICcoKQogICJMaXN0IG9mIGZpbGVzIGVtYmVkZGVkIGlu
-IHRoZSBvdXRwdXQuIikKCihkZWZ1biBteS10YWJsZS1mb3JtYXQgKHRhYmxlIGNvbnRlbnRzIGlu
-Zm8pCiAgKGxldCogKCh0YmxzdGFydCAob3JnLWVsZW1lbnQtcHJvcGVydHkKCQkgICAgOmNvbnRl
-bnRzLWJlZ2luIHRhYmxlKSkKCSAodGJsLWRhdGEgKHNhdmUtZXhjdXJzaW9uCgkJICAgICAoZ290
-by1jaGFyIHRibHN0YXJ0KQoJCSAgICAgKG9yZy1iYWJlbC1kZWwtaGxpbmVzCgkJICAgICAgKG9y
-Zy1iYWJlbC1yZWFkLXRhYmxlKSkpKQogICAgICAgICAodGJsbmFtZSAob3IgKG9yZy1lbGVtZW50
-LXByb3BlcnR5IDpuYW1lIHRhYmxlKSAobWQ1IChmb3JtYXQgIiVzIiB0YmwtZGF0YSkpKSkKCSAo
-Zm9ybWF0IChlbHQgKHBsaXN0LWdldCBpbmZvIDpiYWNrLWVuZCkgMikpCgkgKGNzdi1maWxlIChj
-b25jYXQgdGJsbmFtZSAiLmNzdiIpKQoJIChkYXRhLXVyaS1kYXRhKSkKCiAgICA7OyBIZXJlIHdl
-IGNvbnZlcnQgdGhlIHRhYmxlIGRhdGEgdG8gYSBjc3YgZmlsZQogICAgKHdpdGgtdGVtcC1maWxl
-IGNzdi1maWxlCiAgICAgIChsb29wIGZvciByb3cgaW4gdGJsLWRhdGEKCSAgICBkbwoJICAgIChp
-bnNlcnQKCSAgICAgKG1hcGNvbmNhdAoJICAgICAgKGxhbWJkYSAoeCkgKGZvcm1hdCAiXCIlc1wi
-IiB4KSkKCSAgICAgIHJvdwoJICAgICAgIiwgIiApKQoJICAgIChpbnNlcnQgIlxuIikpCiAgICAg
-IChzZXRxIGRhdGEtdXJpLWRhdGEKCSAgICAoYmFzZTY0LWVuY29kZS1zdHJpbmcKCSAgICAgKGJ1
-ZmZlci1zdHJpbmcpKSkpCgogICAgKGFkZC10by1saXN0ICcqZW1iZWRkZWQtZmlsZXMqIGNzdi1m
-aWxlKQoKICAgIChjb25kCiAgICAgOzsgSFRNTCBleHBvcnQKICAgICAoKGVxIGZvcm1hdCAnaHRt
-bCkKICAgICAgKGNvbmNhdAogICAgICAgKG9yZy1odG1sLXRhYmxlIHRhYmxlIGNvbnRlbnRzIGlu
-Zm8pCiAgICAgICAoZm9ybWF0ICI8YSBocmVmPVwiJXNcIj4lczwvYT4iCgkgICAgICAgY3N2LWZp
-bGUgY3N2LWZpbGUpCiAgICAgICAiICIKICAgICAgIChmb3JtYXQgKGNvbmNhdCAgIjxhIGhyZWY9
-XCJkYXRhOnRleHQvY3N2OyIKICAgICAgICAgICAgICAgICAgICAgICAgImNoYXJzZXQ9VVMtQVND
-SUk7IgogICAgICAgICAgICAgICAgICAgICAgICAiYmFzZTY0LCVzXCI+ZGF0YSB1cmk8L2E+IikK
-CSAgICAgICBkYXRhLXVyaS1kYXRhKSkpCiAgICAgOzsgTGFUZVgvUERGIGV4cG9ydAogICAgICgo
-ZXEgZm9ybWF0ICdsYXRleCkKICAgICAgKGNvbmNhdAogICAgICAgKG9yZy1sYXRleC10YWJsZSB0
-YWJsZSBjb250ZW50cyBpbmZvKQogICAgICAgIlxuIgogICAgICAgKGZvcm1hdCAiJXM6IFxcYXR0
-YWNoZmlsZXslc30iCgkgICAgICAgY3N2LWZpbGUgY3N2LWZpbGUpKSkpKSkK">code uri</a>
-
-<p>
-Next, we define an exporter for source blocks. We will write these to a file too, and put links to them in the exported files. We store the filename of each generated source file in a global variable named <code>*embedded-files*</code> so we can create a new Info metadata entry in the exported PDF.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp" id="src-block-format">(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">my-src-block-format</span> (src-block contents info)
-  <span style="color: #036A07;">"Custom export for src-blocks.</span>
-<span style="color: #036A07;">Saves code in block for embedding. Provides backend-specific</span>
-<span style="color: #036A07;">output."</span>
-  (<span style="color: #0000FF;">let*</span> ((srcname (org-element-property <span style="color: #006FE0;">:name</span> src-block))
-         (lang (org-element-property <span style="color: #006FE0;">:language</span> src-block))
-         (value (org-element-property <span style="color: #006FE0;">:value</span> src-block))
-         (format (elt (plist-get info <span style="color: #006FE0;">:back-end</span>) 2))
-         (exts '((<span style="color: #008000;">"python"</span> . <span style="color: #008000;">".py"</span>)
-                 (<span style="color: #008000;">"emacs-lisp"</span> . <span style="color: #008000;">".elisp"</span>)
-                 (<span style="color: #008000;">"C"</span> . <span style="color: #008000;">".c"</span>)
-                 (<span style="color: #008000;">"R"</span> . <span style="color: #008000;">".R"</span>)))
-         (fname (concat
-                 (<span style="color: #0000FF;">or</span> srcname (md5 value))
-                 (cdr (assoc lang exts))))
-         (data-uri-data))
-
-    (<span style="color: #0000FF;">with-temp-file</span> fname
-      (insert value)
-      (<span style="color: #0000FF;">setq</span> data-uri-data (base64-encode-string
-                           (buffer-string))))
-
-    (add-to-list '*embedded-files* fname)
-
-    (<span style="color: #0000FF;">cond</span>
-     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">HTML export</span>
-     ((eq format 'html)
-      (concat
-       (org-html-src-block src-block contents info)
-       (format <span style="color: #008000;">"&lt;a href=\"%s\"&gt;%s&lt;/a&gt;"</span> fname fname)
-       <span style="color: #008000;">" "</span>
-       (format (concat <span style="color: #008000;">"&lt;a href=\"data:text/%s;"</span>
-                       <span style="color: #008000;">"charset=US-ASCII;base64,"</span>
-                       <span style="color: #008000;">"%s\"&gt;code uri&lt;/a&gt;"</span>)
-               lang data-uri-data)))
-     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">LaTeX/PDF export</span>
-     ((eq format 'latex)
-      (concat
-       (org-latex-src-block src-block contents info)
-       <span style="color: #008000;">"\n"</span>
-       (format <span style="color: #008000;">"%s: \\attachfile{%s}"</span> fname fname))))))
-</pre>
-</div><a href="src-block-format.elisp">src-block-format.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGRlZnVuIG15LXNyYy1ibG9jay1mb3JtYXQgKHNyYy1ibG9jayBjb250ZW50cyBpbmZvKQogICJD
-dXN0b20gZXhwb3J0IGZvciBzcmMtYmxvY2tzLgpTYXZlcyBjb2RlIGluIGJsb2NrIGZvciBlbWJl
-ZGRpbmcuIFByb3ZpZGVzIGJhY2tlbmQtc3BlY2lmaWMKb3V0cHV0LiIKICAobGV0KiAoKHNyY25h
-bWUgKG9yZy1lbGVtZW50LXByb3BlcnR5IDpuYW1lIHNyYy1ibG9jaykpCgkgKGxhbmcgKG9yZy1l
-bGVtZW50LXByb3BlcnR5IDpsYW5ndWFnZSBzcmMtYmxvY2spKQoJICh2YWx1ZSAob3JnLWVsZW1l
-bnQtcHJvcGVydHkgOnZhbHVlIHNyYy1ibG9jaykpCiAgICAgICAgIChmb3JtYXQgKGVsdCAocGxp
-c3QtZ2V0IGluZm8gOmJhY2stZW5kKSAyKSkKCSAoZXh0cyAnKCgicHl0aG9uIiAuICIucHkiKQoJ
-CSAoImVtYWNzLWxpc3AiIC4gIi5lbGlzcCIpCgkJICgiQyIgLiAiLmMiKQoJCSAoIlIiIC4gIi5S
-IikpKQoJIChmbmFtZSAoY29uY2F0CgkJIChvciBzcmNuYW1lIChtZDUgdmFsdWUpKQoJCSAoY2Ry
-IChhc3NvYyBsYW5nIGV4dHMpKSkpCgkgKGRhdGEtdXJpLWRhdGEpKQoKICAgICh3aXRoLXRlbXAt
-ZmlsZSBmbmFtZQogICAgICAoaW5zZXJ0IHZhbHVlKQogICAgICAoc2V0cSBkYXRhLXVyaS1kYXRh
-IChiYXNlNjQtZW5jb2RlLXN0cmluZwoJCQkgICAoYnVmZmVyLXN0cmluZykpKSkKCiAgICAoYWRk
-LXRvLWxpc3QgJyplbWJlZGRlZC1maWxlcyogZm5hbWUpCgogICAgKGNvbmQKICAgICA7OyBIVE1M
-IGV4cG9ydAogICAgICgoZXEgZm9ybWF0ICdodG1sKQogICAgICAoY29uY2F0CiAgICAgICAob3Jn
-LWh0bWwtc3JjLWJsb2NrIHNyYy1ibG9jayBjb250ZW50cyBpbmZvKQogICAgICAgKGZvcm1hdCAi
-PGEgaHJlZj1cIiVzXCI+JXM8L2E+IiBmbmFtZSBmbmFtZSkKICAgICAgICIgIgogICAgICAgKGZv
-cm1hdCAoY29uY2F0ICI8YSBocmVmPVwiZGF0YTp0ZXh0LyVzOyIKICAgICAgICAgICAgICAgICAg
-ICAgICAiY2hhcnNldD1VUy1BU0NJSTtiYXNlNjQsIgogICAgICAgICAgICAgICAgICAgICAgICIl
-c1wiPmNvZGUgdXJpPC9hPiIpCgkgICAgICAgbGFuZyBkYXRhLXVyaS1kYXRhKSkpCiAgICAgOzsg
-TGFUZVgvUERGIGV4cG9ydAogICAgICgoZXEgZm9ybWF0ICdsYXRleCkKICAgICAgKGNvbmNhdAog
-ICAgICAgKG9yZy1sYXRleC1zcmMtYmxvY2sgc3JjLWJsb2NrIGNvbnRlbnRzIGluZm8pCiAgICAg
-ICAiXG4iCiAgICAgICAoZm9ybWF0ICIlczogXFxhdHRhY2hmaWxleyVzfSIgZm5hbWUgZm5hbWUp
-KSkpKSkK">code uri</a>
-
-<p>
-Finally, we also modify the results of a code block so they will appear in a gray box and stand out from the text more clearly.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">my-results</span> (fixed-width contents info)
-  <span style="color: #036A07;">"Transform a results block to make it more visible."</span>
-  (<span style="color: #0000FF;">let</span> ((results (org-element-property <span style="color: #006FE0;">:results</span> fixed-width))
-        (format (elt (plist-get info <span style="color: #006FE0;">:back-end</span>) 2))
-        (value (org-element-property <span style="color: #006FE0;">:value</span> fixed-width)))
-    (<span style="color: #0000FF;">cond</span>
-     ((eq 'latex format)
-      (format <span style="color: #008000;">"\\begin{tcolorbox}</span>
-<span style="color: #008000;">\\begin{verbatim}</span>
-<span style="color: #008000;">RESULTS: %s</span>
-<span style="color: #008000;">\\end{verbatim}</span>
-<span style="color: #008000;">\\end{tcolorbox}"</span>
-              value))
-     (t
-      (format <span style="color: #008000;">"&lt;pre&gt;RESULTS: %s&lt;/pre&gt;"</span> value)))))
-</pre>
-</div><a href="dafeb6b72e57a11595885a79d0ce2cbe.elisp">dafeb6b72e57a11595885a79d0ce2cbe.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGRlZnVuIG15LXJlc3VsdHMgKGZpeGVkLXdpZHRoIGNvbnRlbnRzIGluZm8pCiAgIlRyYW5zZm9y
-bSBhIHJlc3VsdHMgYmxvY2sgdG8gbWFrZSBpdCBtb3JlIHZpc2libGUuIgogIChsZXQgKChyZXN1
-bHRzIChvcmctZWxlbWVudC1wcm9wZXJ0eSA6cmVzdWx0cyBmaXhlZC13aWR0aCkpCgkoZm9ybWF0
-IChlbHQgKHBsaXN0LWdldCBpbmZvIDpiYWNrLWVuZCkgMikpCgkodmFsdWUgKG9yZy1lbGVtZW50
-LXByb3BlcnR5IDp2YWx1ZSBmaXhlZC13aWR0aCkpKQogICAgKGNvbmQKICAgICAoKGVxICdsYXRl
-eCBmb3JtYXQpCiAgICAgIChmb3JtYXQgIlxcYmVnaW57dGNvbG9yYm94fQpcXGJlZ2lue3ZlcmJh
-dGltfQpSRVNVTFRTOiAlcwpcXGVuZHt2ZXJiYXRpbX0KXFxlbmR7dGNvbG9yYm94fSIKCSAgICAg
-IHZhbHVlKSkKICAgICAodAogICAgICAoZm9ybWF0ICI8cHJlPlJFU1VMVFM6ICVzPC9wcmU+IiB2
-YWx1ZSkpKSkpCg==">code uri</a>
-
-<pre>RESULTS: my-results
-</pre>
-
-
-<p>
-An author may also choose to embed a file into their document, using the attachfile package for LaTeX. Here, we leverage the ability of org-mode to create functional links that can be exported differently for LaTeX and HTML. We will create an attachfile link, and set it up to export as a LaTeX command or as a data URI for HTML.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp" id="attachfile-link">(org-add-link-type
- <span style="color: #008000;">"attachfile"</span>
- (<span style="color: #0000FF;">lambda</span> (path) (org-open-file path))
- <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">formatting</span>
- (<span style="color: #0000FF;">lambda</span> (path desc format)
-   (<span style="color: #0000FF;">cond</span>
-    ((eq format 'html)
-     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">we want a data URI to the file name</span>
-     (<span style="color: #0000FF;">let*</span> ((content
-             (<span style="color: #0000FF;">with-temp-buffer</span>
-               (insert-file-contents path)
-               (buffer-string)))
-            (data-uri
-             (base64-encode-string
-              (encode-coding-string content 'utf-8))))
-       (add-to-list '*embedded-files* path)
-       (format (concat <span style="color: #008000;">"&lt;a href=\"data:;base64,"</span>
-                       <span style="color: #008000;">"%s\"&gt;%s&lt;/a&gt;"</span>)
-               data-uri
-               path)))
-    ((eq format 'latex)
-     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">write out the latex command</span>
-     (add-to-list '*embedded-files* path)
-     (format <span style="color: #008000;">"\\attachfile{%s}"</span> path)))))
-</pre>
-</div><a href="attachfile-link.elisp">attachfile-link.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KG9yZy1hZGQtbGluay10eXBlCiAiYXR0YWNoZmlsZSIKIChsYW1iZGEgKHBhdGgpIChvcmctb3Bl
-bi1maWxlIHBhdGgpKQogOzsgZm9ybWF0dGluZwogKGxhbWJkYSAocGF0aCBkZXNjIGZvcm1hdCkK
-ICAgKGNvbmQKICAgICgoZXEgZm9ybWF0ICdodG1sKQogICAgIDs7IHdlIHdhbnQgYSBkYXRhIFVS
-SSB0byB0aGUgZmlsZSBuYW1lCiAgICAgKGxldCogKChjb250ZW50CgkgICAgICh3aXRoLXRlbXAt
-YnVmZmVyCgkgICAgICAgKGluc2VydC1maWxlLWNvbnRlbnRzIHBhdGgpCgkgICAgICAgKGJ1ZmZl
-ci1zdHJpbmcpKSkKCSAgICAoZGF0YS11cmkKCSAgICAgKGJhc2U2NC1lbmNvZGUtc3RyaW5nCgkg
-ICAgICAoZW5jb2RlLWNvZGluZy1zdHJpbmcgY29udGVudCAndXRmLTgpKSkpCiAgICAgICAoYWRk
-LXRvLWxpc3QgJyplbWJlZGRlZC1maWxlcyogcGF0aCkKICAgICAgIChmb3JtYXQgKGNvbmNhdCAi
-PGEgaHJlZj1cImRhdGE6O2Jhc2U2NCwiCiAgICAgICAgICAgICAgICAgICAgICAgIiVzXCI+JXM8
-L2E+IikKCSAgICAgICBkYXRhLXVyaQoJICAgICAgIHBhdGgpKSkKICAgICgoZXEgZm9ybWF0ICds
-YXRleCkKICAgICA7OyB3cml0ZSBvdXQgdGhlIGxhdGV4IGNvbW1hbmQKICAgICAoYWRkLXRvLWxp
-c3QgJyplbWJlZGRlZC1maWxlcyogcGF0aCkKICAgICAoZm9ybWF0ICJcXGF0dGFjaGZpbGV7JXN9
-IiBwYXRoKSkpKSkK">code uri</a>
-
-<p>
-Here, we define a derived backend for HTML and LaTeX export. These are identical to the standard export backends, except for the modified behavior of the table and src-block elements.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(org-export-define-derived-backend 'my-html 'html
-  <span style="color: #006FE0;">:translate-alist</span> '((table . my-table-format)
-                     (src-block . my-src-block-format)
-                     (fixed-width . my-results)))
-
-(org-export-define-derived-backend 'my-latex 'latex
-  <span style="color: #006FE0;">:translate-alist</span> '((table . my-table-format)
-                     (src-block . my-src-block-format)
-                     (fixed-width . my-results)))
-</pre>
-</div><a href="2efb34a32a9c4653ff697c1d00fd294b.elisp">2efb34a32a9c4653ff697c1d00fd294b.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KG9yZy1leHBvcnQtZGVmaW5lLWRlcml2ZWQtYmFja2VuZCAnbXktaHRtbCAnaHRtbAogIDp0cmFu
-c2xhdGUtYWxpc3QgJygodGFibGUgLiBteS10YWJsZS1mb3JtYXQpCgkJICAgICAoc3JjLWJsb2Nr
-IC4gbXktc3JjLWJsb2NrLWZvcm1hdCkKCQkgICAgIChmaXhlZC13aWR0aCAuIG15LXJlc3VsdHMp
-KSkKCihvcmctZXhwb3J0LWRlZmluZS1kZXJpdmVkLWJhY2tlbmQgJ215LWxhdGV4ICdsYXRleAog
-IDp0cmFuc2xhdGUtYWxpc3QgJygodGFibGUgLiBteS10YWJsZS1mb3JtYXQpCiAgICAgICAgICAg
-ICAgICAgICAgIChzcmMtYmxvY2sgLiBteS1zcmMtYmxvY2stZm9ybWF0KQoJCSAgICAgKGZpeGVk
-LXdpZHRoIC4gbXktcmVzdWx0cykpKQo=">code uri</a>
-
-<div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">custom-export-and-open-html</span> ()
-  <span style="color: #036A07;">"Use my-html custom exporter and open the file."</span>
-  (<span style="color: #0000FF;">let*</span> ((base (file-name-nondirectory
-                (file-name-sans-extension (buffer-file-name))))
-         (html (concat base <span style="color: #008000;">".html"</span>)))
-    (<span style="color: #0000FF;">save-restriction</span> (widen)
-                      (browse-url (org-export-to-file 'my-html html)))))
-
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">custom-export-and-open-pdf</span> ()
-  <span style="color: #036A07;">"Use my-latex custom exporter and open pdf."</span>
-  (<span style="color: #0000FF;">save-restriction</span>
-    (widen)
-    (<span style="color: #0000FF;">let*</span> ((org-latex-image-default-width <span style="color: #008000;">""</span>)
-           (*embedded-files* '())
-           (base (file-name-nondirectory
-                  (file-name-sans-extension (buffer-file-name))))
-           (tex (concat base <span style="color: #008000;">".tex"</span>))
-           (pdf (concat base <span style="color: #008000;">".pdf"</span>))
-           (org-latex-minted-options
-            (append
-             org-latex-minted-options
-             '((<span style="color: #008000;">"xleftmargin"</span> <span style="color: #008000;">"\\parindent"</span>)))))
-      (org-export-to-file 'my-latex tex)
-      (ox-manuscript-latex-pdf-process tex)
-      (org-open-file pdf))))
-</pre>
-</div><a href="209ed2ce9b5918b18e58d1c9eb91a1c2.elisp">209ed2ce9b5918b18e58d1c9eb91a1c2.elisp</a> <a href="data:text/emacs-lisp;charset=US-ASCII;base64,KGRlZnVuIGN1c3RvbS1leHBvcnQtYW5kLW9wZW4taHRtbCAoKQogICJVc2UgbXktaHRtbCBjdXN0
-b20gZXhwb3J0ZXIgYW5kIG9wZW4gdGhlIGZpbGUuIgogIChsZXQqICgoYmFzZSAoZmlsZS1uYW1l
-LW5vbmRpcmVjdG9yeQoJCShmaWxlLW5hbWUtc2Fucy1leHRlbnNpb24gKGJ1ZmZlci1maWxlLW5h
-bWUpKSkpCgkgKGh0bWwgKGNvbmNhdCBiYXNlICIuaHRtbCIpKSkKICAgIChzYXZlLXJlc3RyaWN0
-aW9uICh3aWRlbikKCQkgICAgICAoYnJvd3NlLXVybCAob3JnLWV4cG9ydC10by1maWxlICdteS1o
-dG1sIGh0bWwpKSkpKQoKKGRlZnVuIGN1c3RvbS1leHBvcnQtYW5kLW9wZW4tcGRmICgpCiAgIlVz
-ZSBteS1sYXRleCBjdXN0b20gZXhwb3J0ZXIgYW5kIG9wZW4gcGRmLiIKICAoc2F2ZS1yZXN0cmlj
-dGlvbgogICAgKHdpZGVuKQogICAgKGxldCogKChvcmctbGF0ZXgtaW1hZ2UtZGVmYXVsdC13aWR0
-aCAiIikKCSAgICgqZW1iZWRkZWQtZmlsZXMqICcoKSkKCSAgIChiYXNlIChmaWxlLW5hbWUtbm9u
-ZGlyZWN0b3J5CgkJICAoZmlsZS1uYW1lLXNhbnMtZXh0ZW5zaW9uIChidWZmZXItZmlsZS1uYW1l
-KSkpKQoJICAgKHRleCAoY29uY2F0IGJhc2UgIi50ZXgiKSkKCSAgIChwZGYgKGNvbmNhdCBiYXNl
-ICIucGRmIikpCgkgICAob3JnLWxhdGV4LW1pbnRlZC1vcHRpb25zCgkgICAgKGFwcGVuZAoJICAg
-ICBvcmctbGF0ZXgtbWludGVkLW9wdGlvbnMKCSAgICAgJygoInhsZWZ0bWFyZ2luIiAiXFxwYXJp
-bmRlbnQiKSkpKSkKICAgICAgKG9yZy1leHBvcnQtdG8tZmlsZSAnbXktbGF0ZXggdGV4KQogICAg
-ICAob3gtbWFudXNjcmlwdC1sYXRleC1wZGYtcHJvY2VzcyB0ZXgpCiAgICAgIChvcmctb3Blbi1m
-aWxlIHBkZikpKSkK">code uri</a>
-
-
-<p>
-
-</p>
-
-<p>
-<h1 class='org-ref-bib-h1'>Bibliography</h1>
-<ul class='org-ref-bib'><li><a id="kitchin-2015-examp">[kitchin-2015-examp] Kitchin, Examples of Effective Data Sharing in Scientific Publishing, <i>ACS Catalysis</i>, <b>5(6)</b>, 3894-3899 (2015). <a href=" http://dx.doi.org/10.1021/acscatal.5b00538 ">link</a>. <a href="http://dx.doi.org/10.1021/acscatal.5b00538">doi</a>.</a></li>
-<li><a id="hallenbeck-2013-effec-o2">[hallenbeck-2013-effec-o2] "Hallenbeck & Kitchin, Effects of \ceO_2 and \ceSO_2 on the Capture Capacity of a  Primary-Amine Based Polymeric \ceCO_2 Sorbent, <i>"Industrial & Engineering Chemistry Research"</i>, <b>52(31)</b>, 10788-10794 (2013). <a href="http://pubs.acs.org/doi/abs/10.1021/ie400582a">link</a>. <a href="http://dx.doi.org/10.1021/ie400582a">doi</a>.</a></li>
-<li><a id="miller-2014-simul-temper">[miller-2014-simul-temper] Spencer Miller, Vladimir Pushkarev, Andrew, Gellman & John Kitchin, Simulating Temperature Programmed Desorption of Oxygen on  Pt(111) Using DFT Derived Coverage Dependent Desorption  Barriers, <i>Topics in Catalysis</i>, <b>57(1-4)</b>, 106-117 (2014). <a href="http://dx.doi.org/10.1007/s11244-013-0166-3">link</a>. <a href="http://dx.doi.org/10.1007/s11244-013-0166-3">doi</a>.</a></li>
-<li><a id="xu-2014-relat">[xu-2014-relat] Zhongnan Xu & John Kitchin, Relating the Electronic Structure and Reactivity of the 3d  Transition Metal Monoxide Surfaces, <i>Catalysis Communications</i>, <b>52</b>, 60-64 (2014). <a href="http://dx.doi.org/10.1016/j.catcom.2013.10.028">link</a>. <a href="http://dx.doi.org/10.1016/j.catcom.2013.10.028">doi</a>.</a></li>
-<li><a id="xu-2014-probin-cover">[xu-2014-probin-cover] Zhongnan Xu & John Kitchin, Probing the Coverage Dependence of Site and Adsorbate  Configurational Correlations on (111) Surfaces of Late  Transition Metals, <i>J. Phys. Chem. C</i>, <b>118(44)</b>, 25597-25602 (2014). <a href="http://dx.doi.org/10.1021/jp508805h">link</a>. <a href="http://dx.doi.org/10.1021/jp508805h">doi</a>.</a></li>
-<li><a id="curnan-2014-effec-concen">[curnan-2014-effec-concen] Curnan & Kitchin, Effects of Concentration, Crystal Structure, Magnetism, and  Electronic Structure Method on First-Principles Oxygen Vacancy  Formation Energy Trends in Perovskites, <i>The Journal of Physical Chemistry C</i>, <b>118(49)</b>, 28776-28790 (2014). <a href="http://dx.doi.org/10.1021/jp507957n">link</a>. <a href="http://dx.doi.org/10.1021/jp507957n">doi</a>.</a></li>
-<li><a id="boes-2015-estim-bulk">[boes-2015-estim-bulk] Jacob Boes, Gamze Gumuslu, James Miller, Andrew, Gellman & John Kitchin, Estimating Bulk-Composition-Dependent \ceH2 Adsorption  Energies on \ceCu_xPd_1-x Alloy (111) Surfaces, <i>ACS Catalysis</i>, <b>5</b>, 1020-1026 (2015). <a href="http://dx.doi.org/10.1021/cs501585k">link</a>. <a href="http://dx.doi.org/10.1021/cs501585k">doi</a>.</a></li>
-<li><a id="boes-2015-core-cu">[boes-2015-core-cu] Jacob Boes, Peter Kondratyuk, Chunrong Yin, James, Miller, Andrew Gellman & John Kitchin, Core Level Shifts in Cu-Pd Alloys As a Function of Bulk  Composition and Structure, <i>Surface Science</i>, <b>640</b>, 127-132 (2015). <a href="http://dx.doi.org/10.1016/j.susc.2015.02.011">link</a>. <a href="http://dx.doi.org/10.1016/j.susc.2015.02.011">doi</a>.</a></li>
-<li><a id="xu-2015-linear-respon">[xu-2015-linear-respon] Xu, Rossmeisl & Kitchin, A Linear Response DFT+U Study of Trends in the Oxygen  Evolution Activity of Transition Metal Rutile Dioxides, <i>The Journal of Physical Chemistry C</i>, <b>119(9)</b>, 4827-4833 (2015). <a href=" http://dx.doi.org/10.1021/jp511426q ">link</a>. <a href="http://dx.doi.org/10.1021/jp511426q">doi</a>.</a></li>
-<li><a id="xu-2015-accur-u">[xu-2015-accur-u] "Xu, Joshi, Raman, & Kitchin, Accurate Electronic and Chemical Properties of 3d Transition  Metal Oxides Using a Calculated Linear Response U and a DFT  + U(V) Method, <i>"The Journal of Chemical Physics"</i>, <b>142(14)</b>, 144701 (2015). <a href="http://scitation.aip.org/content/aip/journal/jcp/142/14/10.1063/1.4916823">link</a>. <a href="http://dx.doi.org/10.1063/1.4916823">doi</a>.</a></li>
-<li><a id="kitchin-2015-data-surfac-scien">[kitchin-2015-data-surfac-scien] "John Kitchin", Data Sharing in Surface Science, <i>"Surface Science "</i>, <b>N/A</b>, in press (2015). <a href="http://www.sciencedirect.com/science/article/pii/S0039602815001326">link</a>. <a href="http://dx.doi.org/10.1016/j.susc.2015.05.007">doi</a>.</a></li>
-<li><a id="boes-2016-neural-networ">[boes-2016-neural-networ] Jacob Boes, Mitchell Groenenboom, John Keith, & John Kitchin, Neural Network and Reaxff Comparison for Au Properties, <i>Accepted 1/2016, Int. J. Quantum Chemistry</i>, <b></b>, (2016).</a></li>
-<li><a id="mehta-2015-ident-poten">[mehta-2015-ident-poten] Prateek Mehta, Paul Salvador & John Kitchin, Identifying Potential \ceBO2 Oxide Polymorphs for Epitaxial  Growth Candidates, <i>ACS Appl. Mater. Interfaces</i>, <b>6(5)</b>, 3630-3639 (2015). <a href="http://dx.doi.org/10.1021/am4059149">link</a>. <a href="http://dx.doi.org/10.1021/am4059149">doi</a>.</a></li>
-<li><a id="pakin-attachfile">[pakin-attachfile] @miscpakin-attachfile,
-  Url = http://www.ctan.org/tex-archive/macros/latex/contrib/attachfile,
-  Howpublished = http://www.ctan.org/tex-archive/macros/latex/contrib/attachfile,
-  Author =	 Scott Pakin,
-  Title =	 attachfile,
-  Note =	 v1.5b</a></li>
-</ul>
-</p>
+<p><span class="figure-number">Figure 1: </span>VO2 pyrite EOS for the LDA functional.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Kitchin</p>
-<p class="date">Created: 2016-03-14 Mon 18:23</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.50.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="date">Created: 2016-11-12 Sat 20:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

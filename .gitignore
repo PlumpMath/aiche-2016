@@ -14,3 +14,5 @@ org-show-images
 /SI-1.org
 /supporting-information.json
 /supporting-information.org
+ltximg
+*pycache*
